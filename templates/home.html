@@ -1,0 +1,21 @@
+{% extends 'index.html' %}
+
+{% block title %}Accueil - RecoFlix{% endblock %}
+
+{% block content %}
+<div class="hero-section text-white text-center d-flex align-items-center justify-content-center" 
+    style="background-image: url({{ url_for('static', filename='css/images/cinema.jpg') }}); background-size: cover; background-position: center; height: 85vh;">
+    <div class="bg-dark bg-opacity-50 h-100 d-flex flex-column justify-content-center align-items-center">
+        <h1 class="display-3 fw-bold">Bienvenue sur RecoFlix 🎬</h1>
+        <p class="lead">Découvrez des recommandations personnalisées de films selon vos goûts</p>
+        <!-- Boutons Login et Sign Up ENLEVES d'ici -->
+    </div>
+</div>
+
+<div class="container my-5">
+    <h2 class="text-center mb-4">À propos de RecoFlix</h2>
+    <p class="text-muted text-center">
+        RecoFlix est une plateforme de recommandation de films basée sur l’intelligence artificielle. Entrez le nom d’un film que vous aimez et laissez-nous vous proposer des titres similaires que vous allez adorer !
+    </p>
+</div>
+{% endblock %}

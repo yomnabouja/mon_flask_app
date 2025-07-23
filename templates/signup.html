@@ -1,0 +1,26 @@
+{% extends 'index.html' %}
+
+{% block title %}Inscription - RecoFlix{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-center align-items-center vh-100" 
+     style="background-image: url('{{ url_for('static', filename='css/images/cinema.jpg') }}'); background-size: cover; background-position: center;">
+  <div class="card shadow p-4" style="width: 400px; background-color: rgba(255, 255, 255, 0.85);">
+    <h2 class="text-center mb-4">Créer un compte</h2>
+    <form method="post" novalidate>
+      <div class="mb-3">
+        <label for="username" class="form-label">Nom d'utilisateur</label>
+        <input type="text" class="form-control" name="username" id="username" required placeholder="Nom d'utilisateur">
+      </div>
+      <div class="mb-3">
+        <label for="password" class="form-label">Mot de passe</label>
+        <input type="password" class="form-control" name="password" id="password" required placeholder="Mot de passe">
+      </div>
+      <button type="submit" class="btn btn-primary w-100">S'inscrire</button>
+    </form>
+    <p class="mt-3 text-center">
+      Déjà inscrit ? <a href="{{ url_for('api_routes.login') }}">Se connecter</a>
+    </p>
+  </div>
+</div>
+{% endblock %}

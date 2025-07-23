@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> {# Ajout du viewport pour la responsivité #}
+    <title>{% block title %}RecoFlix �🍿🎥 {% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+    {# Lien pour les icônes Bootstrap, essentiel pour les icônes sur toutes les pages #}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh; /* Assure que le pied de page reste en bas */
+            /* Ajout d'un dégradé de fond subtil pour un look plus moderne */
+            background: linear-gradient(to bottom right, #f8f9fa, #e9ecef);
+        }
+        .content-wrapper {
+            flex: 1; /* Permet au contenu de prendre l'espace disponible */
+        }
+        /* Styles pour le pied de page */
+        footer {
+            background-color: #212529; /* Couleur de fond sombre */
+            color: #f8f9fa; /* Texte clair */
+            padding: 40px 0;
+            border-top: 5px solid #0d6efd; /* Bordure supérieure avec couleur primaire */
+        }
+        footer a {
+            color: #adb5bd; /* Liens gris clair */
+            text-decoration: none;
+            transition: color 0.3s ease; /* Transition douce pour les liens */
+        }
+        footer a:hover {
+            color: #ffffff; /* Liens blancs au survol */
+        }
+        footer .social-icons a {
+            font-size: 1.8rem; /* Taille légèrement augmentée pour les icônes sociales */
+            margin: 0 10px;
+            transition: transform 0.3s ease; /* Animation au survol */
+        }
+        footer .social-icons a:hover {
+            transform: translateY(-3px); /* Effet de soulèvement */
+        }
+
+        /* Style pour le bouton "Retour en haut" */
+        #backToTopBtn {
+            display: none; /* Caché par défaut */
+            position: fixed; /* Position fixe */
+            bottom: 30px; /* À 30px du bas */
+            right: 30px; /* À 30px de la droite */
+            z-index: 99; /* Au-dessus des autres éléments */
+            border: none; /* Pas de bordure */
+            outline: none; /* Pas de contour */
+            background-color: #0d6efd; /* Couleur de fond primaire */
+            color: white; /* Texte blanc */
+            cursor: pointer; /* Curseur pointeur */
+            padding: 15px; /* Remplissage */
+            border-radius: 50%; /* Forme ronde */
+            font-size: 1.5rem; /* Taille de l'icône */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Ombre */
+            transition: background-color 0.3s, transform 0.3s; /* Transitions douces */
+        }
+
+        #backToTopBtn:hover {
+            background-color: #0b5ed7; /* Couleur plus foncée au survol */
+            transform: translateY(-5px); /* Léger soulèvement au survol */
+        }
+    </style>
+</head>
+<body class="bg-light">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm"> {# Ajout d'une ombre #}
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="{{ url_for('api_routes.home') }}">RecoFlix <i class="bi bi-film"></i></a> {# Ajout d'une icône et gras #}
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" 
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('api_routes.home') }}">Accueil</a> {# Ajout lien Accueil #}
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('api_routes.login') }}">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('api_routes.register') }}">Sign Up</a>
+                    </li>
+                    {# Optionnel: Ajouter un lien vers le tableau de bord si l'utilisateur est connecté #}
+                    {% if session.get('email') %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('api_routes.dashboard') }}">Dashboard</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    {# Wrapper pour le contenu principal afin de pousser le pied de page vers le bas #}
+    <div class="content-wrapper">
+        <div class="container mt-4">
+            {% block content %}{% endblock %}
+        </div>
+    </div>
+
+    {# Nouveau Pied de page #}
+    <footer class="mt-auto"> {# mt-auto pour pousser le footer vers le bas #}
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <h5>RecoFlix</h5>
+                    <p class="text-muted">Votre plateforme personnalisée de recommandation de films.</p>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <h5>Liens Utiles</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="{{ url_for('api_routes.home') }}">Accueil</a></li>
+                        <li><a href="{{ url_for('api_routes.login') }}">Se connecter</a></li>
+                        <li><a href="{{ url_for('api_routes.register') }}">S'inscrire</a></li>
+                        <li><a href="{{ url_for('api_routes.dashboard') }}">Tableau de bord</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <h5>Suivez-nous</h5>
+                    <div class="social-icons">
+                        <a href="#" class="text-white mx-2"><i class="bi bi-facebook"></i></a>
+                        <a href="#" class="text-white mx-2"><i class="bi bi-twitter"></i></a>
+                        <a href="#" class="text-white mx-2"><i class="bi bi-instagram"></i></a>
+                        <a href="#" class="text-white mx-2"><i class="bi bi-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+            <hr class="my-3 border-secondary">
+            <p class="text-center text-muted small">&copy; 2025 RecoFlix. Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    {# Bouton Retour en haut #}
+    <button onclick="topFunction()" id="backToTopBtn" title="Retour en haut">
+        <i class="bi bi-arrow-up-circle-fill"></i>
+    </button>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // JavaScript pour le bouton "Retour en haut"
+        let mybutton = document.getElementById("backToTopBtn");
+
+        // Quand l'utilisateur fait défiler la page de 20px vers le bas, affiche le bouton
+        window.onscroll = function() {scrollFunction()};
+
+        function scrollFunction() {
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                mybutton.style.display = "block";
+            } else {
+                mybutton.style.display = "none";
+            }
+        }
+
+        // Quand l'utilisateur clique sur le bouton, défile vers le haut du document
+        function topFunction() {
+            document.body.scrollTop = 0; // Pour Safari
+            document.documentElement.scrollTop = 0; // Pour Chrome, Firefox, IE et Opera
+        }
+    </script>
+</body>
+</html>
+�

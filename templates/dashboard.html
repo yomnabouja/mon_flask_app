@@ -1,0 +1,440 @@
+{% extends 'index.html' %}
+
+{% block title %}Tableau de bord - RecoFlix{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <!-- Section de bienvenue -->
+    <div class="p-5 text-center bg-light rounded-3 shadow-sm mb-5">
+        <h1 class="display-4 fw-bold text-primary mb-3">Bienvenue sur RecoFlix, {{ username }} !</h1>
+        <p class="lead text-muted">
+            Découvrez des films qui correspondent parfaitement à vos goûts. Préparez-vous à explorer votre prochaine obsession cinématographique.
+        </p>
+        <hr class="my-4">
+        <p class="text-muted small">Votre compte : {{ user_email }}</p>
+        <a href="{{ url_for('api_routes.logout') }}" class="btn btn-outline-danger btn-lg mt-3">
+            <i class="bi bi-box-arrow-right"></i> Se déconnecter
+        </a>
+    </div>
+
+    <!-- Nouvelle Section : Film du Jour -->
+    <h2 class="text-center text-primary mb-4">Film du Jour 🎬</h2>
+    <div class="card mb-5 shadow-lg border-0">
+        <div class="row g-0">
+            <div class="col-md-4">
+                <img src="{{ url_for('static', filename='css/images/voyage1.jpg') }}" class="img-fluid rounded-start h-100 object-fit-cover" alt="Affiche du Film du Jour">
+            </div>
+            <div class="col-md-8">
+                <div class="card-body p-4">
+                    <h3 class="card-title text-dark fw-bold">Le Voyage de Chihiro</h3>
+                    <p class="card-text text-muted">Genre: Animation, Fantastique, Aventure</p>
+                    <p class="card-text">
+                        Chihiro, une jeune fille de 10 ans, déménage avec ses parents. Sur la route, ils s'arrêtent devant un mystérieux tunnel qui les mène vers un monde peuplé de dieux et d'esprits. Un chef-d'œuvre de l'animation japonaise.
+                    </p>
+                    <div class="d-flex justify-content-between align-items-center mt-3">
+                        <span class="badge bg-warning text-dark"><i class="bi bi-star-fill"></i> 9.0/10</span>
+                        <a href="#" class="btn btn-primary">Voir les détails <i class="bi bi-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Section de recherche de films -->
+    <div class="card shadow-sm mb-5">
+        <div class="card-body p-4">
+            <h2 class="card-title text-center text-secondary mb-4">Trouvez votre prochain film</h2>
+            <form class="d-flex">
+                <input class="form-control me-2 rounded-pill" type="search" placeholder="Entrez le nom d'un film que vous aimez..." aria-label="Rechercher">
+                <button class="btn btn-primary rounded-pill" type="submit">Rechercher</button>
+            </form>
+            <p class="text-muted text-center mt-3 small">
+                *La fonctionnalité de recherche et de recommandation sera bientôt disponible !
+            </p>
+        </div>
+    </div>
+
+    <!-- Nouvelle Section : Carrousel des Films les Plus Vus -->
+    <h2 class="text-center text-primary mb-4">Films les Plus Vus <i class="bi bi-eye-fill"></i></h2>
+    <div id="mostViewedCarousel" class="carousel slide mb-5" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            {# Premier slide #}
+            <div class="carousel-item active">
+                <div class="row row-cols-1 row-cols-md-5 g-4 justify-content-center">
+                    <div class="col">
+                        <div class="card h-100 shadow-sm border-0">
+                            <img src="{{ url_for('static', filename='css/images/film1.jpg') }}" class="card-img-top rounded-top" alt="Affiche du film">
+                            <div class="card-body p-2 text-center">
+                                <h6 class="card-title text-dark mb-0">Film Populaire 1</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card h-100 shadow-sm border-0">
+                            <img src="{{ url_for('static', filename='css/images/film2.jpg') }}" class="card-img-top rounded-top" alt="Affiche du film">
+                            <div class="card-body p-2 text-center">
+                                <h6 class="card-title text-dark mb-0">Film Populaire 2</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card h-100 shadow-sm border-0">
+                            <img src="{{ url_for('static', filename='css/images/film3.jpg') }}" class="card-img-top rounded-top" alt="Affiche du film">
+                            <div class="card-body p-2 text-center">
+                                <h6 class="card-title text-dark mb-0">Film Populaire 3</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card h-100 shadow-sm border-0">
+                            <img src="{{ url_for('static', filename='css/images/film4.jpg') }}" class="card-img-top rounded-top" alt="Affiche du film">
+                            <div class="card-body p-2 text-center">
+                                <h6 class="card-title text-dark mb-0">Film Populaire 4</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card h-100 shadow-sm border-0">
+                            <img src="{{ url_for('static', filename='css/images/film5.jpg') }}" class="card-img-top rounded-top" alt="Affiche du film">
+                            <div class="card-body p-2 text-center">
+                                <h6 class="card-title text-dark mb-0">Film Populaire 5</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {# Deuxième slide #}
+            <div class="carousel-item">
+                <div class="row row-cols-1 row-cols-md-5 g-4 justify-content-center">
+                    <div class="col">
+                        <div class="card h-100 shadow-sm border-0">
+                            <img src="{{ url_for('static', filename='css/images/vu film1.jpg') }}" class="card-img-top rounded-top" alt="Affiche du film">
+                            <div class="card-body p-2 text-center">
+                                <h6 class="card-title text-dark mb-0">Film Populaire 6</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card h-100 shadow-sm border-0">
+                            <img src="{{ url_for('static', filename='css/images/vu film2.jpg') }}" class="card-img-top rounded-top" alt="Affiche du film">
+                            <div class="card-body p-2 text-center">
+                                <h6 class="card-title text-dark mb-0">Film Populaire 7</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card h-100 shadow-sm border-0">
+                            <img src="{{ url_for('static', filename='css/images/vu film3.jpg') }}" class="card-img-top rounded-top" alt="Affiche du film">
+                            <div class="card-body p-2 text-center">
+                                <h6 class="card-title text-dark mb-0">Film Populaire 8</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card h-100 shadow-sm border-0">
+                            <img src="{{ url_for('static', filename='css/images/tendance1.jpg') }}" class="card-img-top rounded-top" alt="Affiche du film">
+                            <div class="card-body p-2 text-center">
+                                <h6 class="card-title text-dark mb-0">Film Populaire 9</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card h-100 shadow-sm border-0">
+                            <img src="{{ url_for('static', filename='css/images/tendance2.jpg') }}" class="card-img-top rounded-top" alt="Affiche du film">
+                            <div class="card-body p-2 text-center">
+                                <h6 class="card-title text-dark mb-0">Film Populaire 10</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#mostViewedCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#mostViewedCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+
+    <!-- Section des recommandations -->
+    <h2 class="text-center text-primary mb-4">Vos Recommandations Personnalisées</h2>
+    <div class="row row-cols-1 row-cols-md-4 g-4 mb-5">
+        <div class="col">
+            <div class="card h-100 shadow-sm border-0">
+                <img src="{{ url_for('static', filename='css/images/film1.jpg') }}" class="card-img-top rounded-top" alt="Affiche du film">
+                <div class="card-body">
+                    <h5 class="card-title text-dark">Titre du Film Recommandé 1</h5>
+                    <p class="card-text text-muted small">Genre: Action, Aventure</p>
+                    <p class="card-text">Une brève description du film et pourquoi il pourrait vous plaire.</p>
+                    <a href="#" class="btn btn-outline-secondary btn-sm">Voir les détails</a>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card h-100 shadow-sm border-0">
+                <img src="{{ url_for('static', filename='css/images/film2.jpg') }}" class="card-img-top rounded-top" alt="Affiche du film">
+                <div class="card-body">
+                    <h5 class="card-title text-dark">Titre du Film Recommandé 2</h5>
+                    <p class="card-text text-muted small">Genre: Drame, Science-fiction</p>
+                    <p class="card-text">Une autre description intéressante pour ce film recommandé.</p>
+                    <a href="#" class="btn btn-outline-secondary btn-sm">Voir les détails</a>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card h-100 shadow-sm border-0">
+                <img src="{{ url_for('static', filename='css/images/film3.jpg') }}" class="card-img-top rounded-top" alt="Affiche du film">
+                <div class="card-body">
+                    <h5 class="card-title text-dark">Titre du Film Recommandé 3</h5>
+                    <p class="card-text text-muted small">Genre: Comédie, Romance</p>
+                    <p class="card-text">Découvrez pourquoi ce film est un excellent choix pour vous.</p>
+                    <a href="#" class="btn btn-outline-secondary btn-sm">Voir les détails</a>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card h-100 shadow-sm border-0">
+                <img src="{{ url_for('static', filename='css/images/film4.jpg') }}" class="card-img-top rounded-top" alt="Affiche du film">
+                <div class="card-body">
+                    <h5 class="card-title text-dark">Titre du Film Recommandé 4</h5>
+                    <p class="card-text text-muted small">Genre: Thriller, Mystère</p>
+                    <p class="card-text">Un autre film pour compléter la ligne.</p>
+                    <a href="#" class="btn btn-outline-secondary btn-sm">Voir les détails</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Nouvelle Section : Catégories Populaires -->
+    <h2 class="text-center text-primary mb-4">Catégories Populaires <i class="bi bi-tags-fill"></i></h2>
+    <div class="d-flex flex-wrap justify-content-center gap-2 mb-5">
+        <a href="#" class="btn btn-outline-secondary rounded-pill">Action</a>
+        <a href="#" class="btn btn-outline-secondary rounded-pill">Comédie</a>
+        <a href="#" class="btn btn-outline-secondary rounded-pill">Drame</a>
+        <a href="#" class="btn btn-outline-secondary rounded-pill">Science-fiction</a>
+        <a href="#" class="btn btn-outline-secondary rounded-pill">Horreur</a>
+        <a href="#" class="btn btn-outline-secondary rounded-pill">Animation</a>
+        <a href="#" class="btn btn-outline-secondary rounded-pill">Thriller</a>
+        <a href="#" class="btn btn-outline-secondary rounded-pill">Romance</a>
+    </div>
+
+    <!-- Nouvelle Section : Acteurs/Réalisateurs à Suivre -->
+    <h2 class="text-center text-primary mb-4">Acteurs & Réalisateurs à Suivre <i class="bi bi-person-badge-fill"></i></h2>
+    <div class="row row-cols-1 row-cols-md-4 g-4 mb-5">
+        <div class="col">
+            <div class="card h-100 shadow-sm text-center p-3">
+                <img src="{{ url_for('static', filename='css/images/ludi boeken.jpg') }}" class="rounded-circle mx-auto mb-3" style="width: 100px; height: 100px; object-fit: cover;" alt="Acteur 1">
+                <h5 class="card-title">ludi boeken</h5>
+                <p class="card-text text-muted small">Realisateur</p>
+                <a href="#" class="btn btn-outline-info btn-sm">Voir profil</a>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card h-100 shadow-sm text-center p-3">
+                <img src="{{ url_for('static', filename='css/images/Martin scorese.jpg') }}" class="rounded-circle mx-auto mb-3" style="width: 100px; height: 100px; object-fit: cover;" alt="Réalisateur 1">
+                <h5 class="card-title">Martin scorese</h5>
+                <p class="card-text text-muted small">Réalisateur</p>
+                <a href="#" class="btn btn-outline-info btn-sm">Voir profil</a>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card h-100 shadow-sm text-center p-3">
+                <img src="{{ url_for('static', filename='css/images/m1.jpg') }}" class="rounded-circle mx-auto mb-3" style="width: 100px; height: 100px; object-fit: cover;" alt="Acteur 2">
+                <h5 class="card-title">steven spielberg</h5>
+                <p class="card-text text-muted small">Realisateur</p>
+                <a href="#" class="btn btn-outline-info btn-sm">Voir profil</a>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card h-100 shadow-sm text-center p-3">
+                <img src="{{ url_for('static', filename='css/images/brad pitt.jpg') }}" class="rounded-circle mx-auto mb-3" style="width: 100px; height: 100px; object-fit: cover;" alt="Réalisateur 2">
+                <h5 class="card-title">Brad pitt </h5>
+                <p class="card-text text-muted small">Acteur</p>
+                <a href="#" class="btn btn-outline-info btn-sm">Voir profil</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Nouvelle Section : Statistiques Personnelles -->
+    <h2 class="text-center text-primary mb-4">Vos Statistiques Personnelles <i class="bi bi-graph-up"></i></h2>
+    <div class="row row-cols-1 row-cols-md-3 g-4 mb-5">
+        <div class="col">
+            <div class="card h-100 shadow-sm text-center p-3 bg-info text-white">
+                <div class="card-body">
+                    <i class="bi bi-camera-reels-fill display-4 mb-3"></i>
+                    <h5 class="card-title">Films Vus</h5>
+                    <p class="display-3 fw-bold">125</p>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card h-100 shadow-sm text-center p-3 bg-success text-white">
+                <div class="card-body">
+                    <i class="bi bi-heart-fill display-4 mb-3"></i>
+                    <h5 class="card-title">Films Aimés</h5>
+                    <p class="display-3 fw-bold">87</p>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card h-100 shadow-sm text-center p-3 bg-warning text-dark">
+                <div class="card-body">
+                    <i class="bi bi-clock-fill display-4 mb-3"></i>
+                    <h5 class="card-title">Heures Passées</h5>
+                    <p class="display-3 fw-bold">250</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Nouvelle Section : Recommandation Spéciale -->
+    <div class="p-5 text-center bg-dark text-white rounded-3 shadow-lg mb-5">
+        <h2 class="display-5 fw-bold mb-3">Envie d'une Recommandation Spéciale ?</h2>
+        <p class="lead">
+            Laissez notre IA vous surprendre avec un film que vous n'auriez jamais découvert seul.
+        </p>
+        <button class="btn btn-light btn-lg mt-3">Obtenir une Recommandation Unique <i class="bi bi-magic"></i></button>
+    </div>
+
+    <!-- Section Liens Rapides (existante, déplacée) -->
+    <h2 class="text-center text-primary mb-4">Accès Rapide</h2>
+    <div class="row row-cols-1 row-cols-md-3 g-4 mb-5">
+        <div class="col">
+            <div class="card h-100 shadow-sm text-center p-3">
+                <div class="card-body">
+                    <i class="bi bi-film text-secondary display-4 mb-3"></i>
+                    <h5 class="card-title">Explorer les Genres</h5>
+                    <p class="card-text text-muted small">Trouvez des films par catégorie.</p>
+                    <a href="#" class="btn btn-outline-primary mt-2">Go !</a>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card h-100 shadow-sm text-center p-3">
+                <div class="card-body">
+                    <i class="bi bi-star-fill text-warning display-4 mb-3"></i>
+                    <h5 class="card-title">Mes Favoris</h5>
+                    <p class="card-text text-muted small">Accédez à votre liste de films préférés.</p>
+                    <a href="#" class="btn btn-outline-primary mt-2">Go !</a>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card h-100 shadow-sm text-center p-3">
+                <div class="card-body">
+                    <i class="bi bi-person-circle text-info display-4 mb-3"></i>
+                    <h5 class="card-title">Mon Profil</h5>
+                    <p class="card-text text-muted small">Gérez vos informations de compte.</p>
+                    <a href="#" class="btn btn-outline-primary mt-2">Go !</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Section Films Récemment Vus (existante) -->
+    <h2 class="text-center text-primary mb-4">Récemment Vus</h2>
+    <div class="row row-cols-1 row-cols-md-5 g-4 mb-5">
+        <div class="col">
+            <div class="card h-100 shadow-sm border-0">
+                <img src="{{ url_for('static', filename='css/images/vu film1.jpg') }}" class="card-img-top rounded-top" alt="Affiche du film vu">
+                <div class="card-body p-2 text-center">
+                    <h6 class="card-title text-dark mb-0">Viaiana 2</h6>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card h-100 shadow-sm border-0">
+                <img src="{{ url_for('static', filename='css/images/vu film2.jpg') }}" class="card-img-top rounded-top" alt="Affiche du film vu">
+                <div class="card-body p-2 text-center">
+                    <h6 class="card-title text-dark mb-0">Les Chevaliers De Zodiaque </h6>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card h-100 shadow-sm border-0">
+                <img src="{{ url_for('static', filename='css/images/vu film3.jpg') }}" class="card-img-top rounded-top" alt="Affiche du film vu">
+                <div class="card-body p-2 text-center">
+                    <h6 class="card-title text-dark mb-0">Petit Piaf</h6>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card h-100 shadow-sm border-0">
+                <img src="{{ url_for('static', filename='css/images/film3.jpg') }}" class="card-img-top rounded-top" alt="Affiche du film vu">
+                <div class="card-body p-2 text-center">
+                    <h6 class="card-title text-dark mb-0">Barbie </h6>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card h-100 shadow-sm border-0">
+                <img src="{{ url_for('static', filename='css/images/vu film5.jpg') }}" class="card-img-top rounded-top" alt="Affiche du film vu">
+                <div class="card-body p-2 text-center">
+                    <h6 class="card-title text-dark mb-0">International Ocean </h6>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Section Films Tendances (existante) -->
+    <h2 class="text-center text-primary mb-4">Films Tendances</h2>
+    <div class="row row-cols-1 row-cols-md-5 g-4 mb-5">
+        <div class="col">
+            <div class="card h-100 shadow-sm border-0">
+                <img src="{{ url_for('static', filename='css/images/tendance1.jpg') }}" class="card-img-top rounded-top" alt="Affiche du film tendance">
+                <div class="card-body p-2 text-center">
+                    <h6 class="card-title text-dark mb-0">Sinners</h6>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card h-100 shadow-sm border-0">
+                <img src="{{ url_for('static', filename='css/images/tendance2.jpg') }}" class="card-img-top rounded-top" alt="Affiche du film tendance">
+                <div class="card-body p-2 text-center">
+                    <h6 class="card-title text-dark mb-0">One Of Them Days</h6>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card h-100 shadow-sm border-0">
+                <img src="{{ url_for('static', filename='css/images/tendance3.jpg') }}" class="card-img-top rounded-top" alt="Affiche du film tendance">
+                <div class="card-body p-2 text-center">
+                    <h6 class="card-title text-dark mb-0">Les Condés</h6>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card h-100 shadow-sm border-0">
+                <img src="{{ url_for('static', filename='css/images/tendance4.jpg') }}" class="card-img-top rounded-top" alt="Affiche du film tendance">
+                <div class="card-body p-2 text-center">
+                    <h6 class="card-title text-dark mb-0">Menteuse</h6>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card h-100 shadow-sm border-0">
+                <img src="{{ url_for('static', filename='css/images/tendance5.jpg') }}" class="card-img-top rounded-top" alt="Affiche du film tendance">
+                <div class="card-body p-2 text-center">
+                    <h6 class="card-title text-dark mb-0">Captian America </h6>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Footer -->
+<footer class="bg-dark text-white text-center py-4 mt-5">
+    <div class="container">
+        <p>&copy; 2025 RecoFlix. Tous droits réservés.</p>
+        <div class="social-icons">
+            <a href="#" class="text-white mx-2"><i class="bi bi-facebook"></i></a>
+            <a href="#" class="text-white mx-2"><i class="bi bi-twitter"></i></a>
+            <a href="#" class="text-white mx-2"><i class="bi bi-instagram"></i></a>
+        </div>
+    </div>
+</footer>
+{% endblock %}
