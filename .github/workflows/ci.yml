@@ -1,4 +1,4 @@
-name: CI Pipeline
+name: CI/CD Pipeline
 
 on:
   push:
@@ -6,8 +6,16 @@ on:
   pull_request:
     branches: [main]
 
+env:
+  # Définissez les noms de vos ressources Azure ici
+  AZURE_RESOURCE_GROUP: RecoFlixResourceGroup
+  AZURE_WEBAPP_NAME: recoflix-app-yomna # Remplacez par le nom exact de votre App Service
+  AZURE_ACR_NAME: recoflixacryomna    # Remplacez par le nom exact de votre ACR
+  DOCKER_IMAGE_NAME: recoflix-app
+  DOCKER_IMAGE_TAG: latest
+
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -17,7 +25,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.9'
+          python-version: '3.11' # ALIGNEMENT : Mettre à jour vers 3.11
 
       - name: Install dependencies
         run: |
@@ -25,8 +33,31 @@ jobs:
           pip install -r requirements.txt
 
       - name: Run Flask test
+        # Assurez-vous que votre app.py est bien le point d'entrée ou adaptez la commande
         run: |
-          python app.py &
+          python wsgi.py & # Lancez wsgi.py si c'est votre point d'entrée principal
           sleep 5
           curl -f http://localhost:5000 || exit 1
 
+      - name: Log in to Azure
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }} # Secret GitHub pour les identifiants Azure
+
+      - name: Build and push Docker image to ACR
+        id: build-image
+        uses: azure/docker-login@v1
+        with:
+          login-server: ${{ env.AZURE_ACR_NAME }}.azurecr.io
+          username: ${{ secrets.ACR_USERNAME }} # Secret GitHub pour le nom d'utilisateur ACR
+          password: ${{ secrets.ACR_PASSWORD }} # Secret GitHub pour le mot de passe ACR
+      - run: |
+          docker build . -t ${{ env.AZURE_ACR_NAME }}.azurecr.io/${{ env.DOCKER_IMAGE_NAME }}:${{ env.DOCKER_IMAGE_TAG }}
+          docker push ${{ env.AZURE_ACR_NAME }}.azurecr.io/${{ env.DOCKER_IMAGE_NAME }}:${{ env.DOCKER_IMAGE_TAG }}
+
+      - name: Deploy to Azure Web App
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: ${{ env.AZURE_WEBAPP_NAME }}
+          resource-group: ${{ env.AZURE_RESOURCE_GROUP }}
+          images: '${{ env.AZURE_ACR_NAME }}.azurecr.io/${{ env.DOCKER_IMAGE_NAME }}:${{ env.DOCKER_IMAGE_TAG }}'
