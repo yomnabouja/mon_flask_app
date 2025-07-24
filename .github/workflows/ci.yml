@@ -22,21 +22,28 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      - name: Debug: List repository contents
+        run: |
+          echo "Listing contents of the cloned repository root:"
+          ls -R . # Lists all files and subdirectories recursively
+          echo "Current working directory:"
+          pwd # Prints the current working directory
+
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.11'
 
       - name: Install dependencies
-        # wsgi.py, requirements.txt, et Dockerfile sont à la racine du dépôt cloné.
-        # Pas besoin de 'working-directory' ici.
+        # Nous allons laisser les chemins relatifs ici pour le moment.
+        # Le débogage ci-dessus nous aidera à ajuster si nécessaire.
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
       - name: Run Flask test
-        # wsgi.py est à la racine du dépôt cloné.
-        # Pas besoin de 'working-directory' ici.
+        # Nous allons laisser les chemins relatifs ici pour le moment.
+        # Le débogage ci-dessus nous aidera à ajuster si nécessaire.
         run: |
           python wsgi.py &
           sleep 5
@@ -54,9 +61,8 @@ jobs:
           login-server: ${{ env.AZURE_ACR_NAME }}.azurecr.io
           username: ${{ secrets.ACR_USERNAME }}
           password: ${{ secrets.ACR_PASSWORD }}
-        # Correction pour docker build : le chemin du contexte doit être '.' (répertoire courant)
-        # car Dockerfile est à la racine du dépôt cloné.
-      - run: |
+        # Le contexte de build Docker est le répertoire courant '.'
+        run: |
           docker build . -t ${{ env.AZURE_ACR_NAME }}.azurecr.io/${{ env.DOCKER_IMAGE_NAME }}:${{ env.DOCKER_IMAGE_TAG }}
           docker push ${{ env.AZURE_ACR_NAME }}.azurecr.io/${{ env.DOCKER_IMAGE_NAME }}:${{ env.DOCKER_IMAGE_TAG }}
 
@@ -64,5 +70,5 @@ jobs:
         uses: azure/webapps-deploy@v2
         with:
           app-name: ${{ env.AZURE_WEBAPP_NAME }}
-          resource-group-name:  ${{ env.AZURE_RESOURCE_GROUP }}
+          resource-group: ${{ env.AZURE_RESOURCE_GROUP }}
           images: '${{ env.AZURE_ACR_NAME }}.azurecr.io/${{ env.DOCKER_IMAGE_NAME }}:${{ env.DOCKER_IMAGE_TAG }}'
