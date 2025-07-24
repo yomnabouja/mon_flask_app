@@ -7,12 +7,12 @@ on:
     branches: [main]
 
 env:
-  # Définissez les noms de vos ressources Azure ici
   AZURE_RESOURCE_GROUP: RecoFlixResourceGroup
-  AZURE_WEBAPP_NAME: recoflix-app-yomna # Remplacez par le nom exact de votre App Service
-  AZURE_ACR_NAME: recoflixacryomna    # Remplacez par le nom exact de votre ACR
+  AZURE_WEBAPP_NAME: recoflix-app-yomna
+  AZURE_ACR_NAME: recoflixacryomna
   DOCKER_IMAGE_NAME: recoflix-app
   DOCKER_IMAGE_TAG: latest
+  PORT: 5000
 
 jobs:
   build-and-deploy:
@@ -25,7 +25,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.11' # ALIGNEMENT : Mettre à jour vers 3.11
+          python-version: '3.11'
 
       - name: Install dependencies
         run: |
@@ -33,24 +33,24 @@ jobs:
           pip install -r requirements.txt
 
       - name: Run Flask test
-        # Assurez-vous que votre app.py est bien le point d'entrée ou adaptez la commande
+        # Correction finale : wsgi.py est à la racine du dépôt cloné, pas besoin de 'cd'
         run: |
-          python wsgi.py & # Lancez wsgi.py si c'est votre point d'entrée principal
+          python wsgi.py & # Lance wsgi.py directement depuis la racine du dépôt
           sleep 5
-          curl -f http://localhost:5000 || exit 1
+          curl -f http://localhost:${{ env.PORT }} || exit 1
 
       - name: Log in to Azure
         uses: azure/login@v1
         with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }} # Secret GitHub pour les identifiants Azure
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Build and push Docker image to ACR
         id: build-image
         uses: azure/docker-login@v1
         with:
           login-server: ${{ env.AZURE_ACR_NAME }}.azurecr.io
-          username: ${{ secrets.ACR_USERNAME }} # Secret GitHub pour le nom d'utilisateur ACR
-          password: ${{ secrets.ACR_PASSWORD }} # Secret GitHub pour le mot de passe ACR
+          username: ${{ secrets.ACR_USERNAME }}
+          password: ${{ secrets.ACR_PASSWORD }}
       - run: |
           docker build . -t ${{ env.AZURE_ACR_NAME }}.azurecr.io/${{ env.DOCKER_IMAGE_NAME }}:${{ env.DOCKER_IMAGE_TAG }}
           docker push ${{ env.AZURE_ACR_NAME }}.azurecr.io/${{ env.DOCKER_IMAGE_NAME }}:${{ env.DOCKER_IMAGE_TAG }}
