@@ -40,13 +40,14 @@
     <form method="POST" action="/login">
       <div class="mb-3">
         <label for="email" class="form-label fw-semibold">Email</label>
-        <input type="email" class="form-control" name="email" id="email" placeholder="votre.email@example.com" required>
+        <!-- Ajout de l'attribut pattern pour la validation @gmail.com -->
+        <input type="email" class="form-control" name="email" id="email" placeholder="votre.email@gmail.com" pattern="[a-zA-Z0-9._%+-]+@gmail\.com$" title="Veuillez utiliser une adresse Gmail valide (ex: exemple@gmail.com)" required>
       </div>
       <div class="mb-3">
         <label for="password" class="form-label fw-semibold">Mot de passe</label>
         <input type="password" class="form-control" name="password" id="password" placeholder="Votre mot de passe" required>
       </div>
-      <button class="btn btn-primary w-100 fw-bold">Se connecter</button>
+      <button type="submit" class="btn btn-primary w-100 fw-bold">Se connecter</button>
     </form>
   </div>
 </div>
