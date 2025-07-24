@@ -35,15 +35,11 @@ jobs:
           python-version: '3.11'
 
       - name: Install dependencies
-        # Nous allons laisser les chemins relatifs ici pour le moment.
-        # Le débogage ci-dessus nous aidera à ajuster si nécessaire.
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
       - name: Run Flask test
-        # Nous allons laisser les chemins relatifs ici pour le moment.
-        # Le débogage ci-dessus nous aidera à ajuster si nécessaire.
         run: |
           python wsgi.py &
           sleep 5
@@ -61,7 +57,6 @@ jobs:
           login-server: ${{ env.AZURE_ACR_NAME }}.azurecr.io
           username: ${{ secrets.ACR_USERNAME }}
           password: ${{ secrets.ACR_PASSWORD }}
-        # Le contexte de build Docker est le répertoire courant '.'
         run: |
           docker build . -t ${{ env.AZURE_ACR_NAME }}.azurecr.io/${{ env.DOCKER_IMAGE_NAME }}:${{ env.DOCKER_IMAGE_TAG }}
           docker push ${{ env.AZURE_ACR_NAME }}.azurecr.io/${{ env.DOCKER_IMAGE_NAME }}:${{ env.DOCKER_IMAGE_TAG }}
