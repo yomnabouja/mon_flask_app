@@ -28,14 +28,17 @@ jobs:
           python-version: '3.11'
 
       - name: Install dependencies
+        # Exécute cette étape depuis le sous-dossier 'mon_flask_app'
+        working-directory: mon_flask_app/
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
       - name: Run Flask test
-        # Correction finale : wsgi.py est à la racine du dépôt cloné, pas besoin de 'cd'
+        # Exécute cette étape depuis le sous-dossier 'mon_flask_app'
+        working-directory: mon_flask_app/
         run: |
-          python wsgi.py & # Lance wsgi.py directement depuis la racine du dépôt
+          python wsgi.py & # Lance wsgi.py directement depuis ce répertoire
           sleep 5
           curl -f http://localhost:${{ env.PORT }} || exit 1
 
@@ -51,8 +54,9 @@ jobs:
           login-server: ${{ env.AZURE_ACR_NAME }}.azurecr.io
           username: ${{ secrets.ACR_USERNAME }}
           password: ${{ secrets.ACR_PASSWORD }}
+        # Exécute la commande docker build depuis le sous-dossier 'mon_flask_app'
       - run: |
-          docker build . -t ${{ env.AZURE_ACR_NAME }}.azurecr.io/${{ env.DOCKER_IMAGE_NAME }}:${{ env.DOCKER_IMAGE_TAG }}
+          docker build mon_flask_app/ . -t ${{ env.AZURE_ACR_NAME }}.azurecr.io/${{ env.DOCKER_IMAGE_NAME }}:${{ env.DOCKER_IMAGE_TAG }}
           docker push ${{ env.AZURE_ACR_NAME }}.azurecr.io/${{ env.DOCKER_IMAGE_NAME }}:${{ env.DOCKER_IMAGE_TAG }}
 
       - name: Deploy to Azure Web App
