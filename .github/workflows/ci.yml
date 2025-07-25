@@ -1,3 +1,5 @@
+)">
+```yaml
 name: CI/CD Pipeline
 
 on:
@@ -67,3 +69,4 @@ jobs:
           app-name: ${{ env.AZURE_WEBAPP_NAME }}
           resource-group: ${{ env.AZURE_RESOURCE_GROUP }}
           images: '${{ env.AZURE_ACR_NAME }}.azurecr.io/${{ env.DOCKER_IMAGE_NAME }}:${{ env.DOCKER_IMAGE_TAG }}'
+```
