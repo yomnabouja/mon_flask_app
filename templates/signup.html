@@ -7,13 +7,26 @@
      style="background-image: url('{{ url_for('static', filename='css/images/cinema.jpg') }}'); background-size: cover; background-position: center;">
   <div class="card shadow p-4" style="width: 400px; background-color: rgba(255, 255, 255, 0.85);">
     <h2 class="text-center mb-4">Créer un compte</h2> {# Titre du formulaire #}
+    
+    {# Section pour afficher les messages flash de Flask #}
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
     <form method="post" novalidate> {# Formulaire d'inscription, 'novalidate' désactive la validation HTML par défaut #}
       <div class="mb-3">
         <label for="username" class="form-label">Nom d'utilisateur</label> {# Champ pour le nom d'utilisateur #}
         <input type="text" class="form-control" name="username" id="username" required placeholder="Nom d'utilisateur">
       </div>
       <div class="mb-3">
-        <label for="email" class="form-label">Email</label> {# NOUVEAU CHAMP POUR L'EMAIL #}
+        <label for="email" class="form-label">Email</label> {# Champ pour l'email #}
         <input type="email" class="form-control" name="email" id="email" required placeholder="Votre adresse email">
       </div>
       <div class="mb-3">
