@@ -17,6 +17,9 @@
         </a>
     </div>
 
+    <!-- Conteneur pour les messages dynamiques (JavaScript) -->
+    <div id="dynamic-alert-container" class="mt-3"></div>
+
     <!-- Nouvelle Section : Film du Jour -->
     <h2 class="text-center text-primary mb-4">Film du Jour 🎬</h2>
     <div class="card mb-5 shadow-lg border-0">
@@ -633,8 +636,8 @@
                             <span class="ms-2 text-muted">/10</span>
                         </div>
                         <div class="d-grid gap-2">
-                            <button class="btn btn-success btn-lg"><i class="bi bi-play-fill"></i> Regarder</button>
-                            <button class="btn btn-outline-primary btn-lg"><i class="bi bi-plus-circle-fill"></i> Ajouter à ma liste</button>
+                            <button class="btn btn-success btn-lg" id="playFilmBtn"><i class="bi bi-play-fill"></i> Regarder</button>
+                            <button class="btn btn-outline-primary btn-lg" id="addToListBtn"><i class="bi bi-plus-circle-fill"></i> Ajouter à ma liste</button>
                         </div>
                     </div>
                 </div>
@@ -650,6 +653,26 @@
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const filmDetailsModal = document.getElementById('filmDetailsModal');
+        const dynamicAlertContainer = document.getElementById('dynamic-alert-container');
+
+        // Fonction pour afficher une alerte dynamique
+        function showAlert(message, type = 'info') {
+            const alertHtml = `
+                <div class="alert alert-${type} alert-dismissible fade show" role="alert">
+                    ${message}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            `;
+            dynamicAlertContainer.innerHTML = alertHtml;
+            // Optionnel: masquer l'alerte après un certain temps
+            setTimeout(() => {
+                const alertElement = dynamicAlertContainer.querySelector('.alert');
+                if (alertElement) {
+                    new bootstrap.Alert(alertElement).close();
+                }
+            }, 5000); // Masquer après 5 secondes
+        }
+
         filmDetailsModal.addEventListener('show.bs.modal', function (event) {
             // Bouton qui a déclenché la modale
             const button = event.relatedTarget;
@@ -667,12 +690,64 @@
             const modalDescription = filmDetailsModal.querySelector('#modalFilmDescription');
             const modalRating = filmDetailsModal.querySelector('#modalFilmRating');
             const modalImage = filmDetailsModal.querySelector('#modalFilmImage');
+            const playFilmBtn = filmDetailsModal.querySelector('#playFilmBtn');
+            const addToListBtn = filmDetailsModal.querySelector('#addToListBtn');
 
             modalTitle.textContent = title;
             modalGenre.textContent = genre;
             modalDescription.textContent = description;
             modalRating.innerHTML = `<i class="bi bi-star-fill"></i> ${rating}`; // Ajoute l'icône étoile
             modalImage.src = image;
+
+            // Stocker les données du film sur les boutons pour un accès facile dans les gestionnaires de clic
+            playFilmBtn.dataset.title = title;
+            addToListBtn.dataset.title = title;
+            addToListBtn.dataset.genre = genre;
+            addToListBtn.dataset.description = description;
+            addToListBtn.dataset.rating = rating;
+            addToListBtn.dataset.image = image;
+        });
+
+        // Gestionnaire d'événements pour le bouton "Regarder"
+        document.getElementById('playFilmBtn').addEventListener('click', function() {
+            const filmTitle = this.dataset.title;
+            showAlert(`Lancement du film "${filmTitle}"... (Fonctionnalité en développement)`, 'info');
+            // Dans une vraie application, vous redirigeriez vers une page de lecteur vidéo ou démarreriez le streaming
+            $('#filmDetailsModal').modal('hide'); // Masquer la modale après avoir cliqué sur "Regarder"
+        });
+
+        // Gestionnaire d'événements pour le bouton "Ajouter à ma liste"
+        document.getElementById('addToListBtn').addEventListener('click', async function() {
+            const filmData = {
+                title: this.dataset.title,
+                genre: this.dataset.genre,
+                description: this.dataset.description,
+                rating: parseFloat(this.dataset.rating), // Convertir l'évaluation en flottant
+                image: this.dataset.image
+            };
+
+            try {
+                const response = await fetch('{{ url_for('api_routes.add_to_list') }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(filmData),
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    showAlert(result.message, result.status);
+                } else {
+                    showAlert(result.message || 'Erreur lors de l\'ajout à la liste.', 'danger');
+                }
+            } catch (error) {
+                console.error('Erreur:', error);
+                showAlert('Une erreur réseau est survenue. Veuillez réessayer.', 'danger');
+            } finally {
+                $('#filmDetailsModal').modal('hide'); // Masquer la modale après l'action
+            }
         });
     });
 </script>

@@ -1,5 +1,5 @@
-from flask import Blueprint, render_template, request, redirect, url_for, session, flash, current_app # Ajout de current_app
-from flask_mail import Message # Ajout de Message pour l'envoi d'emails
+from flask import Blueprint, render_template, request, redirect, url_for, session, flash, current_app, jsonify
+from flask_mail import Message
 from app.db import get_db_connection
 import sqlite3
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -14,14 +14,11 @@ def home():
 def register():
     if request.method == 'POST':
         username = request.form['username']
-        email = request.form['email'] # CORRECTION ICI : Récupère l'email du formulaire
+        email = request.form['email']
         password = request.form['password']
         
         hashed_password = generate_password_hash(password) 
 
-        # dummy_email = f"{username.lower()}@example.com" # Cette ligne n'est plus nécessaire
-        # email = dummy_email # Cette ligne n'est plus nécessaire
-        
         conn = get_db_connection()
         cursor = conn.cursor()
 
@@ -32,23 +29,23 @@ def register():
 
             if existing_user:
                 print(f"DEBUG (Register): Utilisateur existant trouvé: {existing_user['username']} / {existing_user['email']}")
-                # Modification du message flash ici
                 flash('Vous avez déjà un compte.', 'warning') 
             else:
                 print("DEBUG (Register): Aucun utilisateur existant trouvé, tentative d'insertion...")
                 cursor.execute('INSERT INTO users (username, email, password) VALUES (?, ?, ?)', (username, email, hashed_password))
                 conn.commit()
-                print("DEBUG (Register): Utilisateur inséré avec succès dans la base de données.")
+                user_id = cursor.lastrowid # Récupère l'ID du nouvel utilisateur inséré
+                print(f"DEBUG (Register): Utilisateur inséré avec succès dans la base de données. ID: {user_id}")
                 
-                # --- NOUVEAU : Auto-connexion de l'utilisateur après l'inscription réussie ---
+                session['user_id'] = user_id # Stocke l'ID de l'utilisateur dans la session
                 session['email'] = email
                 session['username'] = username 
+                print(f"DEBUG (Register): Session['user_id'] set to: {session['user_id']}")
                 print(f"DEBUG (Register): Session['email'] set to: {session['email']}")
                 print(f"DEBUG (Register): Session['username'] set to: {session['username']}")
 
                 flash('Inscription réussie ! Bienvenue sur RecoFlix.', 'success')
                 
-                # --- NOUVEAU : Envoi de l'email de bienvenue après l'inscription ---
                 try:
                     msg = Message(
                         subject="Bienvenue sur RecoFlix !",
@@ -58,23 +55,22 @@ def register():
                              "Commencez dès maintenant à explorer nos recommandations de films.\n\n"
                              "L'équipe RecoFlix."
                     )
-                    # Accède à l'instance de Mail depuis l'application Flask courante
                     current_app.extensions['mail'].send(msg)
                     flash('Un email de bienvenue vous a été envoyé !', 'info')
                     print("DEBUG (Email): Email de bienvenue envoyé avec succès (ou tentative effectuée).")
                 except Exception as mail_e:
                     flash(f"Erreur lors de l'envoi de l'email de bienvenue : {mail_e}", 'danger')
-                    print(f"DEBUG (Email Error): {mail_e}") # Affiche l'erreur dans les logs du serveur
+                    print(f"DEBUG (Email Error): {mail_e}")
 
                 conn.close()
                 print("DEBUG (Register): Redirection vers le tableau de bord.")
-                return redirect(url_for('api_routes.dashboard')) # Redirige directement vers le tableau de bord
+                return redirect(url_for('api_routes.dashboard'))
         except sqlite3.IntegrityError as e:
             print(f"DEBUG (Register Error): sqlite3.IntegrityError: {e}")
-            flash('Erreur lors de l\'inscription (email unique). Veuillez réessayer avec un nom d\'utilisateur différent.', 'danger')
+            flash('Un utilisateur avec ce nom d\'utilisateur ou cet email existe déjà.', 'warning') # Message cohérent
         except Exception as e:
             print(f"DEBUG (Register Error): Erreur inattendue: {e}")
-            flash('Une erreur inattendue est survenue lors de l\'inscription.', 'danger')
+            flash(f'Une erreur inattendue est survenue lors de l\'inscription: {e}', 'danger')
         finally:
             if conn:
                 conn.close()
@@ -90,7 +86,7 @@ def login():
         password = request.form['password']
 
         print(f"DEBUG (Login): Tentative de connexion pour l'email: {user_email_from_form}")
-        print(f"DEBUG (Login): Mot de passe saisi: {password}") # ATTENTION: Ne pas faire en production
+        print(f"DEBUG (Login): Mot de passe saisi: {password}") 
 
         conn = get_db_connection()
         cursor = conn.cursor()
@@ -105,8 +101,10 @@ def login():
             print(f"DEBUG (Login): Mot de passe haché en DB: {user['password']}")
             if check_password_hash(user['password'], password): 
                 print("DEBUG (Login): Mot de passe correspond!")
+                session['user_id'] = user['id'] # Stocke l'ID de l'utilisateur dans la session
                 session['email'] = user['email'] 
                 session['username'] = user['username'] 
+                print(f"DEBUG (Login): Session['user_id'] set to: {session['user_id']}")
                 print(f"DEBUG (Login): Session['email'] set to: {session['email']}")
                 print(f"DEBUG (Login): Session['username'] set to: {session['username']}")
                 flash(f'Bienvenue {user["username"]} !', 'success')
@@ -123,19 +121,91 @@ def login():
 @api_routes.route('/dashboard')
 def dashboard():
     print("DEBUG (Dashboard): Accès à la fonction dashboard.")
-    print(f"DEBUG (Dashboard): Contenu de la session: {dict(session)}") # Affiche tout le contenu de la session
+    print(f"DEBUG (Dashboard): Contenu de la session: {dict(session)}")
 
-    if 'email' in session:
+    if 'user_id' in session: # Vérifie l'ID de l'utilisateur dans la session
+        print(f"DEBUG (Dashboard): 'user_id' trouvé dans la session: {session['user_id']}")
         print(f"DEBUG (Dashboard): 'email' trouvé dans la session: {session['email']}")
         print(f"DEBUG (Dashboard): 'username' dans la session: {session.get('username', 'Non défini')}")
-        return render_template('dashboard.html', user_email=session['email'], username=session.get('username', 'Utilisateur')) 
+        return render_template('dashboard.html', 
+                               user_email=session['email'], 
+                               username=session.get('username', 'Utilisateur'),
+                               user_id=session['user_id']) # Passe l'ID de l'utilisateur au template
     else:
-        print("DEBUG (Dashboard): 'email' non trouvé dans la session. Redirection vers la page de connexion.")
+        print("DEBUG (Dashboard): 'user_id' non trouvé dans la session. Redirection vers la page de connexion.")
         return redirect(url_for('api_routes.login'))
 
 @api_routes.route('/logout')
 def logout():
+    session.pop('user_id', None) # Supprime l'ID de l'utilisateur de la session
     session.pop('email', None) 
     session.pop('username', None) 
     flash('Déconnecté avec succès', 'info')
     return redirect(url_for('api_routes.login'))
+
+@api_routes.route('/add_to_list', methods=['POST'])
+def add_to_list():
+    if 'user_id' not in session:
+        return jsonify({'status': 'error', 'message': 'Non authentifié. Veuillez vous connecter.'}), 401
+
+    user_id = session['user_id']
+    data = request.get_json()
+
+    film_title = data.get('title')
+    film_genre = data.get('genre')
+    film_description = data.get('description')
+    film_rating = data.get('rating')
+    film_image = data.get('image')
+
+    if not film_title:
+        return jsonify({'status': 'error', 'message': 'Titre du film manquant.'}), 400
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    try:
+        # Vérifie si le film existe déjà dans la table 'films'
+        cursor.execute('SELECT id FROM films WHERE title = ?', (film_title,))
+        film = cursor.fetchone()
+        film_id = None
+
+        if film:
+            film_id = film['id']
+            print(f"DEBUG (AddToList): Film '{film_title}' déjà existant avec ID: {film_id}")
+        else:
+            # Insère le film dans la table 'films'
+            cursor.execute(
+                'INSERT INTO films (title, genre, description, rating, image_url) VALUES (?, ?, ?, ?, ?)',
+                (film_title, film_genre, film_description, film_rating, film_image)
+            )
+            conn.commit()
+            film_id = cursor.lastrowid
+            print(f"DEBUG (AddToList): Film '{film_title}' inséré avec ID: {film_id}")
+
+        # Vérifie si le film est déjà dans la liste de l'utilisateur
+        cursor.execute('SELECT id FROM user_films WHERE user_id = ? AND film_id = ?', (user_id, film_id))
+        user_film_entry = cursor.fetchone()
+
+        if user_film_entry:
+            print(f"DEBUG (AddToList): Film '{film_title}' déjà dans la liste de l'utilisateur {user_id}.")
+            return jsonify({'status': 'info', 'message': 'Ce film est déjà dans votre liste !'}), 200
+        else:
+            # Ajoute le film à la liste de l'utilisateur
+            cursor.execute(
+                'INSERT INTO user_films (user_id, film_id) VALUES (?, ?)',
+                (user_id, film_id)
+            )
+            conn.commit()
+            print(f"DEBUG (AddToList): Film '{film_title}' ajouté à la liste de l'utilisateur {user_id}.")
+            return jsonify({'status': 'success', 'message': 'Film ajouté à votre liste avec succès !'}), 200
+
+    except sqlite3.Error as e:
+        print(f"DEBUG (AddToList Error): Erreur SQLite: {e}")
+        conn.rollback() # Annule la transaction en cas d'erreur
+        return jsonify({'status': 'error', 'message': f'Erreur de base de données: {e}'}), 500
+    except Exception as e:
+        print(f"DEBUG (AddToList Error): Erreur inattendue: {e}")
+        return jsonify({'status': 'error', 'message': f'Une erreur inattendue est survenue: {e}'}), 500
+    finally:
+        if conn:
+            conn.close()
