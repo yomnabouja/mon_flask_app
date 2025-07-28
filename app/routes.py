@@ -14,30 +14,37 @@ def home():
 def register():
     if request.method == 'POST':
         username = request.form['username']
+        email = request.form['email'] # CORRECTION ICI : Récupère l'email du formulaire
         password = request.form['password']
         
         hashed_password = generate_password_hash(password) 
 
-        dummy_email = f"{username.lower()}@example.com" 
-        email = dummy_email
+        # dummy_email = f"{username.lower()}@example.com" # Cette ligne n'est plus nécessaire
+        # email = dummy_email # Cette ligne n'est plus nécessaire
         
         conn = get_db_connection()
         cursor = conn.cursor()
 
         try:
+            print(f"DEBUG (Register): Tentative d'inscription pour username='{username}', email='{email}'")
             cursor.execute('SELECT * FROM users WHERE username = ? OR email = ?', (username, email))
             existing_user = cursor.fetchone()
 
             if existing_user:
+                print(f"DEBUG (Register): Utilisateur existant trouvé: {existing_user['username']} / {existing_user['email']}")
                 # Modification du message flash ici
                 flash('Vous avez déjà un compte.', 'warning') 
             else:
+                print("DEBUG (Register): Aucun utilisateur existant trouvé, tentative d'insertion...")
                 cursor.execute('INSERT INTO users (username, email, password) VALUES (?, ?, ?)', (username, email, hashed_password))
                 conn.commit()
+                print("DEBUG (Register): Utilisateur inséré avec succès dans la base de données.")
                 
                 # --- NOUVEAU : Auto-connexion de l'utilisateur après l'inscription réussie ---
                 session['email'] = email
                 session['username'] = username 
+                print(f"DEBUG (Register): Session['email'] set to: {session['email']}")
+                print(f"DEBUG (Register): Session['username'] set to: {session['username']}")
 
                 flash('Inscription réussie ! Bienvenue sur RecoFlix.', 'success')
                 
@@ -54,20 +61,26 @@ def register():
                     # Accède à l'instance de Mail depuis l'application Flask courante
                     current_app.extensions['mail'].send(msg)
                     flash('Un email de bienvenue vous a été envoyé !', 'info')
+                    print("DEBUG (Email): Email de bienvenue envoyé avec succès (ou tentative effectuée).")
                 except Exception as mail_e:
                     flash(f"Erreur lors de l'envoi de l'email de bienvenue : {mail_e}", 'danger')
                     print(f"DEBUG (Email Error): {mail_e}") # Affiche l'erreur dans les logs du serveur
 
                 conn.close()
+                print("DEBUG (Register): Redirection vers le tableau de bord.")
                 return redirect(url_for('api_routes.dashboard')) # Redirige directement vers le tableau de bord
         except sqlite3.IntegrityError as e:
+            print(f"DEBUG (Register Error): sqlite3.IntegrityError: {e}")
             flash('Erreur lors de l\'inscription (email unique). Veuillez réessayer avec un nom d\'utilisateur différent.', 'danger')
         except Exception as e:
+            print(f"DEBUG (Register Error): Erreur inattendue: {e}")
             flash('Une erreur inattendue est survenue lors de l\'inscription.', 'danger')
         finally:
             if conn:
                 conn.close()
+            print("DEBUG (Register): Connexion à la base de données fermée.")
 
+    print("DEBUG (Register): Rendu de la page signup.html (pas de redirection).")
     return render_template('signup.html')
 
 @api_routes.route('/login', methods=['GET', 'POST'])
