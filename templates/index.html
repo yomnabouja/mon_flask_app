@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"> {# Ajout du viewport pour la responsivité #}
-    <title>{% block title %}RecoFlix �🍿🎥 {% endblock %}</title>
+    <title>{% block title %}RecoFlix 🎬🍿🎥 {% endblock %}</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
     {# Lien pour les icônes Bootstrap, essentiel pour les icônes sur toutes les pages #}
@@ -84,7 +84,7 @@
                         <a class="nav-link" href="{{ url_for('api_routes.home') }}">Accueil</a> {# Ajout lien Accueil #}
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('api_routes.login') }}">Login</a>
+                        <a class="nav-link" href="{{ url_for('api_routes.login') }}">Login</a> {# CORRECTION ICI #}
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url_for('api_routes.register') }}">Sign Up</a>
@@ -119,7 +119,7 @@
                     <h5>Liens Utiles</h5>
                     <ul class="list-unstyled">
                         <li><a href="{{ url_for('api_routes.home') }}">Accueil</a></li>
-                        <li><a href="{{ url_for('api_routes.login') }}">Se connecter</a></li>
+                        <li><a href="{{ url_for('api_routes.login') }}">Se connecter</a></li> {# CORRECTION ICI #}
                         <li><a href="{{ url_for('api_routes.register') }}">S'inscrire</a></li>
                         <li><a href="{{ url_for('api_routes.dashboard') }}">Tableau de bord</a></li>
                     </ul>
@@ -168,4 +168,3 @@
     </script>
 </body>
 </html>
-�

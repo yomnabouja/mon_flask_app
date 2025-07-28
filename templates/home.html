@@ -1,21 +1,21 @@
-{% extends 'index.html' %}
+{% extends 'index.html' %} {# Indique que ce template hérite de 'index.html' #}
 
-{% block title %}Accueil - RecoFlix{% endblock %}
+{% block title %}Accueil - RecoFlix{% endblock %} {# Définit le titre spécifique de cette page #}
 
-{% block content %}
+{% block content %} {# Début du bloc de contenu qui sera inséré dans 'index.html' #}
 <div class="hero-section text-white text-center d-flex align-items-center justify-content-center" 
     style="background-image: url({{ url_for('static', filename='css/images/cinema.jpg') }}); background-size: cover; background-position: center; height: 85vh;">
     <div class="bg-dark bg-opacity-50 h-100 d-flex flex-column justify-content-center align-items-center">
-        <h1 class="display-3 fw-bold">Bienvenue sur RecoFlix 🎬</h1>
-        <p class="lead">Découvrez des recommandations personnalisées de films selon vos goûts</p>
-        <!-- Boutons Login et Sign Up ENLEVES d'ici -->
+        <h1 class="display-3 fw-bold">Bienvenue sur RecoFlix 🎬</h1> {# Titre principal de la page d'accueil #}
+        <p class="lead">Découvrez des recommandations personnalisées de films selon vos goûts</p> {# Slogan #}
+        <!-- Boutons Login et Sign Up ENLEVES d'ici --> {# Commentaire indiquant que les boutons ont été déplacés vers la barre de navigation #}
     </div>
 </div>
 
-<div class="container my-5">
-    <h2 class="text-center mb-4">À propos de RecoFlix</h2>
-    <p class="text-muted text-center">
+<div class="container my-5"> {# Conteneur Bootstrap pour le contenu principal #}
+    <h2 class="text-center mb-4">À propos de RecoFlix</h2> {# Titre de la section "À propos" #}
+    <p class="text-muted text-center"> {# Paragraphe de description #}
         RecoFlix est une plateforme de recommandation de films basée sur l’intelligence artificielle. Entrez le nom d’un film que vous aimez et laissez-nous vous proposer des titres similaires que vous allez adorer !
     </p>
 </div>
-{% endblock %}
+{% endblock %} {# Fin du bloc de contenu #}
