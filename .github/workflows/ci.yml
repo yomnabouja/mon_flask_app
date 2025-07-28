@@ -1,4 +1,5 @@
 ---
+
 name: CI/CD Pipeline
 
 on:
@@ -23,12 +24,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Debug: List repository contents
-        run: |
-          echo "Listing contents of the cloned repository root:"
-          ls -R .
-          echo "Current working directory:"
-          pwd
+      
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -67,5 +63,5 @@ jobs:
         uses: azure/webapps-deploy@v2
         with:
           app-name: ${{ env.AZURE_WEBAPP_NAME }}
-          resource-group: ${{ env.AZURE_RESOURCE_GROUP }}
+          resource-group-name: ${{ env.AZURE_RESOURCE_GROUP }}
           images: '${{ env.AZURE_ACR_NAME }}.azurecr.io/${{ env.DOCKER_IMAGE_NAME }}:${{ env.DOCKER_IMAGE_TAG }}'
