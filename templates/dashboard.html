@@ -33,7 +33,15 @@
                     </p>
                     <div class="d-flex justify-content-between align-items-center mt-3">
                         <span class="badge bg-warning text-dark"><i class="bi bi-star-fill"></i> 9.0/10</span>
-                        <a href="#" class="btn btn-primary">Voir les détails <i class="bi bi-arrow-right"></i></a>
+                        <button type="button" class="btn btn-primary view-details-btn"
+                                data-bs-toggle="modal" data-bs-target="#filmDetailsModal"
+                                data-title="Le Voyage de Chihiro"
+                                data-genre="Animation, Fantastique, Aventure"
+                                data-description="Chihiro, une jeune fille de 10 ans, déménage avec ses parents. Sur la route, ils s'arrêtent devant un mystérieux tunnel qui les mène vers un monde peuplé de dieux et d'esprits. Un chef-d'œuvre de l'animation japonaise."
+                                data-rating="9.0"
+                                data-image="{{ url_for('static', filename='css/images/voyage1.jpg') }}">
+                            Voir les détails <i class="bi bi-arrow-right"></i>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -62,7 +70,13 @@
             <div class="carousel-item active">
                 <div class="row row-cols-1 row-cols-md-5 g-4 justify-content-center">
                     <div class="col">
-                        <div class="card h-100 shadow-sm border-0">
+                        <div class="card h-100 shadow-sm border-0 film-card"
+                             data-bs-toggle="modal" data-bs-target="#filmDetailsModal"
+                             data-title="Film Populaire 1"
+                             data-genre="Action, Aventure"
+                             data-description="Un film d'action palpitant avec des scènes spectaculaires et une histoire captivante."
+                             data-rating="8.5"
+                             data-image="{{ url_for('static', filename='css/images/film1.jpg') }}">
                             <img src="{{ url_for('static', filename='css/images/film1.jpg') }}" class="card-img-top rounded-top" alt="Affiche du film">
                             <div class="card-body p-2 text-center">
                                 <h6 class="card-title text-dark mb-0">Film Populaire 1</h6>
@@ -70,7 +84,13 @@
                         </div>
                     </div>
                     <div class="col">
-                        <div class="card h-100 shadow-sm border-0">
+                        <div class="card h-100 shadow-sm border-0 film-card"
+                             data-bs-toggle="modal" data-bs-target="#filmDetailsModal"
+                             data-title="Film Populaire 2"
+                             data-genre="Drame, Romance"
+                             data-description="Une histoire d'amour émouvante et déchirante qui vous tiendra en haleine du début à la fin."
+                             data-rating="7.9"
+                             data-image="{{ url_for('static', filename='css/images/film2.jpg') }}">
                             <img src="{{ url_for('static', filename='css/images/film2.jpg') }}" class="card-img-top rounded-top" alt="Affiche du film">
                             <div class="card-body p-2 text-center">
                                 <h6 class="card-title text-dark mb-0">Film Populaire 2</h6>
@@ -78,7 +98,13 @@
                         </div>
                     </div>
                     <div class="col">
-                        <div class="card h-100 shadow-sm border-0">
+                        <div class="card h-100 shadow-sm border-0 film-card"
+                             data-bs-toggle="modal" data-bs-target="#filmDetailsModal"
+                             data-title="Film Populaire 3"
+                             data-genre="Science-fiction, Thriller"
+                             data-description="Un thriller de science-fiction qui explore les limites de la technologie et de l'humanité."
+                             data-rating="8.8"
+                             data-image="{{ url_for('static', filename='css/images/film3.jpg') }}">
                             <img src="{{ url_for('static', filename='css/images/film3.jpg') }}" class="card-img-top rounded-top" alt="Affiche du film">
                             <div class="card-body p-2 text-center">
                                 <h6 class="card-title text-dark mb-0">Film Populaire 3</h6>
@@ -86,7 +112,13 @@
                         </div>
                     </div>
                     <div class="col">
-                        <div class="card h-100 shadow-sm border-0">
+                        <div class="card h-100 shadow-sm border-0 film-card"
+                             data-bs-toggle="modal" data-bs-target="#filmDetailsModal"
+                             data-title="Film Populaire 4"
+                             data-genre="Comédie, Famille"
+                             data-description="Une comédie légère et amusante parfaite pour toute la famille, pleine de rires et de moments tendres."
+                             data-rating="7.2"
+                             data-image="{{ url_for('static', filename='css/images/film4.jpg') }}">
                             <img src="{{ url_for('static', filename='css/images/film4.jpg') }}" class="card-img-top rounded-top" alt="Affiche du film">
                             <div class="card-body p-2 text-center">
                                 <h6 class="card-title text-dark mb-0">Film Populaire 4</h6>
@@ -94,7 +126,13 @@
                         </div>
                     </div>
                     <div class="col">
-                        <div class="card h-100 shadow-sm border-0">
+                        <div class="card h-100 shadow-sm border-0 film-card"
+                             data-bs-toggle="modal" data-bs-target="#filmDetailsModal"
+                             data-title="Film Populaire 5"
+                             data-genre="Action, Thriller"
+                             data-description="Un film d'action intense avec des rebondissements inattendus et une performance d'acteur exceptionnelle."
+                             data-rating="8.1"
+                             data-image="{{ url_for('static', filename='css/images/film5.jpg') }}">
                             <img src="{{ url_for('static', filename='css/images/film5.jpg') }}" class="card-img-top rounded-top" alt="Affiche du film">
                             <div class="card-body p-2 text-center">
                                 <h6 class="card-title text-dark mb-0">Film Populaire 5</h6>
@@ -107,7 +145,13 @@
             <div class="carousel-item">
                 <div class="row row-cols-1 row-cols-md-5 g-4 justify-content-center">
                     <div class="col">
-                        <div class="card h-100 shadow-sm border-0">
+                        <div class="card h-100 shadow-sm border-0 film-card"
+                             data-bs-toggle="modal" data-bs-target="#filmDetailsModal"
+                             data-title="Film Populaire 6"
+                             data-genre="Animation, Aventure"
+                             data-description="Une aventure animée pleine de magie et de personnages attachants, pour petits et grands."
+                             data-rating="8.3"
+                             data-image="{{ url_for('static', filename='css/images/vu film1.jpg') }}">
                             <img src="{{ url_for('static', filename='css/images/vu film1.jpg') }}" class="card-img-top rounded-top" alt="Affiche du film">
                             <div class="card-body p-2 text-center">
                                 <h6 class="card-title text-dark mb-0">Film Populaire 6</h6>
@@ -115,7 +159,13 @@
                         </div>
                     </div>
                     <div class="col">
-                        <div class="card h-100 shadow-sm border-0">
+                        <div class="card h-100 shadow-sm border-0 film-card"
+                             data-bs-toggle="modal" data-bs-target="#filmDetailsModal"
+                             data-title="Film Populaire 7"
+                             data-genre="Fantastique, Drame"
+                             data-description="Un drame fantastique qui explore des thèmes profonds avec une touche de surnaturel."
+                             data-rating="7.5"
+                             data-image="{{ url_for('static', filename='css/images/vu film2.jpg') }}">
                             <img src="{{ url_for('static', filename='css/images/vu film2.jpg') }}" class="card-img-top rounded-top" alt="Affiche du film">
                             <div class="card-body p-2 text-center">
                                 <h6 class="card-title text-dark mb-0">Film Populaire 7</h6>
@@ -123,7 +173,13 @@
                         </div>
                     </div>
                     <div class="col">
-                        <div class="card h-100 shadow-sm border-0">
+                        <div class="card h-100 shadow-sm border-0 film-card"
+                             data-bs-toggle="modal" data-bs-target="#filmDetailsModal"
+                             data-title="Film Populaire 8"
+                             data-genre="Comédie, Musical"
+                             data-description="Une comédie musicale entraînante avec des numéros de danse et des chansons mémorables."
+                             data-rating="7.8"
+                             data-image="{{ url_for('static', filename='css/images/vu film3.jpg') }}">
                             <img src="{{ url_for('static', filename='css/images/vu film3.jpg') }}" class="card-img-top rounded-top" alt="Affiche du film">
                             <div class="card-body p-2 text-center">
                                 <h6 class="card-title text-dark mb-0">Film Populaire 8</h6>
@@ -131,7 +187,13 @@
                         </div>
                     </div>
                     <div class="col">
-                        <div class="card h-100 shadow-sm border-0">
+                        <div class="card h-100 shadow-sm border-0 film-card"
+                             data-bs-toggle="modal" data-bs-target="#filmDetailsModal"
+                             data-title="Film Populaire 9"
+                             data-genre="Horreur, Mystère"
+                             data-description="Un film d'horreur psychologique qui vous tiendra en haleine jusqu'à la dernière minute."
+                             data-rating="6.9"
+                             data-image="{{ url_for('static', filename='css/images/tendance1.jpg') }}">
                             <img src="{{ url_for('static', filename='css/images/tendance1.jpg') }}" class="card-img-top rounded-top" alt="Affiche du film">
                             <div class="card-body p-2 text-center">
                                 <h6 class="card-title text-dark mb-0">Film Populaire 9</h6>
@@ -139,7 +201,13 @@
                         </div>
                     </div>
                     <div class="col">
-                        <div class="card h-100 shadow-sm border-0">
+                        <div class="card h-100 shadow-sm border-0 film-card"
+                             data-bs-toggle="modal" data-bs-target="#filmDetailsModal"
+                             data-title="Film Populaire 10"
+                             data-genre="Action, Aventure"
+                             data-description="Une aventure épique remplie d'action, de trésors cachés et de paysages à couper le souffle."
+                             data-rating="8.0"
+                             data-image="{{ url_for('static', filename='css/images/tendance2.jpg') }}">
                             <img src="{{ url_for('static', filename='css/images/tendance2.jpg') }}" class="card-img-top rounded-top" alt="Affiche du film">
                             <div class="card-body p-2 text-center">
                                 <h6 class="card-title text-dark mb-0">Film Populaire 10</h6>
@@ -163,46 +231,102 @@
     <h2 class="text-center text-primary mb-4">Vos Recommandations Personnalisées</h2>
     <div class="row row-cols-1 row-cols-md-4 g-4 mb-5">
         <div class="col">
-            <div class="card h-100 shadow-sm border-0">
+            <div class="card h-100 shadow-sm border-0 film-card"
+                 data-bs-toggle="modal" data-bs-target="#filmDetailsModal"
+                 data-title="Titre du Film Recommandé 1"
+                 data-genre="Action, Aventure"
+                 data-description="Une brève description du film et pourquoi il pourrait vous plaire."
+                 data-rating="7.0"
+                 data-image="{{ url_for('static', filename='css/images/film1.jpg') }}">
                 <img src="{{ url_for('static', filename='css/images/film1.jpg') }}" class="card-img-top rounded-top" alt="Affiche du film">
                 <div class="card-body">
                     <h5 class="card-title text-dark">Titre du Film Recommandé 1</h5>
                     <p class="card-text text-muted small">Genre: Action, Aventure</p>
                     <p class="card-text">Une brève description du film et pourquoi il pourrait vous plaire.</p>
-                    <a href="#" class="btn btn-outline-secondary btn-sm">Voir les détails</a>
+                    <button type="button" class="btn btn-outline-secondary btn-sm view-details-btn"
+                            data-bs-toggle="modal" data-bs-target="#filmDetailsModal"
+                            data-title="Titre du Film Recommandé 1"
+                            data-genre="Action, Aventure"
+                            data-description="Une brève description du film et pourquoi il pourrait vous plaire."
+                            data-rating="7.0"
+                            data-image="{{ url_for('static', filename='css/images/film1.jpg') }}">
+                        Voir les détails
+                    </button>
                 </div>
             </div>
         </div>
         <div class="col">
-            <div class="card h-100 shadow-sm border-0">
+            <div class="card h-100 shadow-sm border-0 film-card"
+                 data-bs-toggle="modal" data-bs-target="#filmDetailsModal"
+                 data-title="Titre du Film Recommandé 2"
+                 data-genre="Drame, Science-fiction"
+                 data-description="Une autre description intéressante pour ce film recommandé."
+                 data-rating="7.5"
+                 data-image="{{ url_for('static', filename='css/images/film2.jpg') }}">
                 <img src="{{ url_for('static', filename='css/images/film2.jpg') }}" class="card-img-top rounded-top" alt="Affiche du film">
                 <div class="card-body">
                     <h5 class="card-title text-dark">Titre du Film Recommandé 2</h5>
                     <p class="card-text text-muted small">Genre: Drame, Science-fiction</p>
                     <p class="card-text">Une autre description intéressante pour ce film recommandé.</p>
-                    <a href="#" class="btn btn-outline-secondary btn-sm">Voir les détails</a>
+                    <button type="button" class="btn btn-outline-secondary btn-sm view-details-btn"
+                            data-bs-toggle="modal" data-bs-target="#filmDetailsModal"
+                            data-title="Titre du Film Recommandé 2"
+                            data-genre="Drame, Science-fiction"
+                            data-description="Une autre description intéressante pour ce film recommandé."
+                            data-rating="7.5"
+                            data-image="{{ url_for('static', filename='css/images/film2.jpg') }}">
+                        Voir les détails
+                    </button>
                 </div>
             </div>
         </div>
         <div class="col">
-            <div class="card h-100 shadow-sm border-0">
+            <div class="card h-100 shadow-sm border-0 film-card"
+                 data-bs-toggle="modal" data-bs-target="#filmDetailsModal"
+                 data-title="Titre du Film Recommandé 3"
+                 data-genre="Comédie, Romance"
+                 data-description="Découvrez pourquoi ce film est un excellent choix pour vous."
+                 data-rating="8.0"
+                 data-image="{{ url_for('static', filename='css/images/film3.jpg') }}">
                 <img src="{{ url_for('static', filename='css/images/film3.jpg') }}" class="card-img-top rounded-top" alt="Affiche du film">
                 <div class="card-body">
                     <h5 class="card-title text-dark">Titre du Film Recommandé 3</h5>
                     <p class="card-text text-muted small">Genre: Comédie, Romance</p>
                     <p class="card-text">Découvrez pourquoi ce film est un excellent choix pour vous.</p>
-                    <a href="#" class="btn btn-outline-secondary btn-sm">Voir les détails</a>
+                    <button type="button" class="btn btn-outline-secondary btn-sm view-details-btn"
+                            data-bs-toggle="modal" data-bs-target="#filmDetailsModal"
+                            data-title="Titre du Film Recommandé 3"
+                            data-genre="Comédie, Romance"
+                            data-description="Découvrez pourquoi ce film est un excellent choix pour vous."
+                            data-rating="8.0"
+                            data-image="{{ url_for('static', filename='css/images/film3.jpg') }}">
+                        Voir les détails
+                    </button>
                 </div>
             </div>
         </div>
         <div class="col">
-            <div class="card h-100 shadow-sm border-0">
+            <div class="card h-100 shadow-sm border-0 film-card"
+                 data-bs-toggle="modal" data-bs-target="#filmDetailsModal"
+                 data-title="Titre du Film Recommandé 4"
+                 data-genre="Thriller, Mystère"
+                 data-description="Un autre film pour compléter la ligne."
+                 data-rating="7.3"
+                 data-image="{{ url_for('static', filename='css/images/film4.jpg') }}">
                 <img src="{{ url_for('static', filename='css/images/film4.jpg') }}" class="card-img-top rounded-top" alt="Affiche du film">
                 <div class="card-body">
                     <h5 class="card-title text-dark">Titre du Film Recommandé 4</h5>
                     <p class="card-text text-muted small">Genre: Thriller, Mystère</p>
                     <p class="card-text">Un autre film pour compléter la ligne.</p>
-                    <a href="#" class="btn btn-outline-secondary btn-sm">Voir les détails</a>
+                    <button type="button" class="btn btn-outline-secondary btn-sm view-details-btn"
+                            data-bs-toggle="modal" data-bs-target="#filmDetailsModal"
+                            data-title="Titre du Film Recommandé 4"
+                            data-genre="Thriller, Mystère"
+                            data-description="Un autre film pour compléter la ligne."
+                            data-rating="7.3"
+                            data-image="{{ url_for('static', filename='css/images/film4.jpg') }}">
+                        Voir les détails
+                    </button>
                 </div>
             </div>
         </div>
@@ -338,7 +462,13 @@
     <h2 class="text-center text-primary mb-4">Récemment Vus</h2>
     <div class="row row-cols-1 row-cols-md-5 g-4 mb-5">
         <div class="col">
-            <div class="card h-100 shadow-sm border-0">
+            <div class="card h-100 shadow-sm border-0 film-card"
+                 data-bs-toggle="modal" data-bs-target="#filmDetailsModal"
+                 data-title="Viaiana 2"
+                 data-genre="Animation, Aventure"
+                 data-description="Une suite captivante avec de nouveaux défis et des personnages inoubliables."
+                 data-rating="7.8"
+                 data-image="{{ url_for('static', filename='css/images/vu film1.jpg') }}">
                 <img src="{{ url_for('static', filename='css/images/vu film1.jpg') }}" class="card-img-top rounded-top" alt="Affiche du film vu">
                 <div class="card-body p-2 text-center">
                     <h6 class="card-title text-dark mb-0">Viaiana 2</h6>
@@ -346,7 +476,13 @@
             </div>
         </div>
         <div class="col">
-            <div class="card h-100 shadow-sm border-0">
+            <div class="card h-100 shadow-sm border-0 film-card"
+                 data-bs-toggle="modal" data-bs-target="#filmDetailsModal"
+                 data-title="Les Chevaliers De Zodiaque"
+                 data-genre="Animation, Action, Fantastique"
+                 data-description="Les légendaires Chevaliers du Zodiaque reviennent pour protéger la Terre des forces du mal."
+                 data-rating="8.2"
+                 data-image="{{ url_for('static', filename='css/images/vu film2.jpg') }}">
                 <img src="{{ url_for('static', filename='css/images/vu film2.jpg') }}" class="card-img-top rounded-top" alt="Affiche du film vu">
                 <div class="card-body p-2 text-center">
                     <h6 class="card-title text-dark mb-0">Les Chevaliers De Zodiaque </h6>
@@ -354,7 +490,13 @@
             </div>
         </div>
         <div class="col">
-            <div class="card h-100 shadow-sm border-0">
+            <div class="card h-100 shadow-sm border-0 film-card"
+                 data-bs-toggle="modal" data-bs-target="#filmDetailsModal"
+                 data-title="Petit Piaf"
+                 data-genre="Animation, Comédie"
+                 data-description="Les aventures hilarantes d'un petit piaf qui découvre le monde."
+                 data-rating="7.0"
+                 data-image="{{ url_for('static', filename='css/images/vu film3.jpg') }}">
                 <img src="{{ url_for('static', filename='css/images/vu film3.jpg') }}" class="card-img-top rounded-top" alt="Affiche du film vu">
                 <div class="card-body p-2 text-center">
                     <h6 class="card-title text-dark mb-0">Petit Piaf</h6>
@@ -362,7 +504,13 @@
             </div>
         </div>
         <div class="col">
-            <div class="card h-100 shadow-sm border-0">
+            <div class="card h-100 shadow-sm border-0 film-card"
+                 data-bs-toggle="modal" data-bs-target="#filmDetailsModal"
+                 data-title="Barbie"
+                 data-genre="Comédie, Fantastique"
+                 data-description="Barbie quitte Barbieland pour le monde réel dans cette comédie colorée et pleine de surprises."
+                 data-rating="7.5"
+                 data-image="{{ url_for('static', filename='css/images/film3.jpg') }}">
                 <img src="{{ url_for('static', filename='css/images/film3.jpg') }}" class="card-img-top rounded-top" alt="Affiche du film vu">
                 <div class="card-body p-2 text-center">
                     <h6 class="card-title text-dark mb-0">Barbie </h6>
@@ -370,7 +518,13 @@
             </div>
         </div>
         <div class="col">
-            <div class="card h-100 shadow-sm border-0">
+            <div class="card h-100 shadow-sm border-0 film-card"
+                 data-bs-toggle="modal" data-bs-target="#filmDetailsModal"
+                 data-title="International Ocean"
+                 data-genre="Documentaire"
+                 data-description="Explorez les merveilles et les mystères des océans du monde."
+                 data-rating="8.9"
+                 data-image="{{ url_for('static', filename='css/images/vu film5.jpg') }}">
                 <img src="{{ url_for('static', filename='css/images/vu film5.jpg') }}" class="card-img-top rounded-top" alt="Affiche du film vu">
                 <div class="card-body p-2 text-center">
                     <h6 class="card-title text-dark mb-0">International Ocean </h6>
@@ -383,7 +537,13 @@
     <h2 class="text-center text-primary mb-4">Films Tendances</h2>
     <div class="row row-cols-1 row-cols-md-5 g-4 mb-5">
         <div class="col">
-            <div class="card h-100 shadow-sm border-0">
+            <div class="card h-100 shadow-sm border-0 film-card"
+                 data-bs-toggle="modal" data-bs-target="#filmDetailsModal"
+                 data-title="Sinners"
+                 data-genre="Drame, Thriller"
+                 data-description="Un thriller sombre qui explore les profondeurs de l'âme humaine et ses péchés."
+                 data-rating="7.1"
+                 data-image="{{ url_for('static', filename='css/images/tendance1.jpg') }}">
                 <img src="{{ url_for('static', filename='css/images/tendance1.jpg') }}" class="card-img-top rounded-top" alt="Affiche du film tendance">
                 <div class="card-body p-2 text-center">
                     <h6 class="card-title text-dark mb-0">Sinners</h6>
@@ -391,7 +551,13 @@
             </div>
         </div>
         <div class="col">
-            <div class="card h-100 shadow-sm border-0">
+            <div class="card h-100 shadow-sm border-0 film-card"
+                 data-bs-toggle="modal" data-bs-target="#filmDetailsModal"
+                 data-title="One Of Them Days"
+                 data-genre="Comédie"
+                 data-description="Une journée ordinaire qui tourne au chaos dans cette comédie hilarante."
+                 data-rating="6.5"
+                 data-image="{{ url_for('static', filename='css/images/tendance2.jpg') }}">
                 <img src="{{ url_for('static', filename='css/images/tendance2.jpg') }}" class="card-img-top rounded-top" alt="Affiche du film tendance">
                 <div class="card-body p-2 text-center">
                     <h6 class="card-title text-dark mb-0">One Of Them Days</h6>
@@ -399,7 +565,13 @@
             </div>
         </div>
         <div class="col">
-            <div class="card h-100 shadow-sm border-0">
+            <div class="card h-100 shadow-sm border-0 film-card"
+                 data-bs-toggle="modal" data-bs-target="#filmDetailsModal"
+                 data-title="Les Condés"
+                 data-genre="Comédie, Action"
+                 data-description="Deux policiers que tout oppose doivent faire équipe dans cette comédie d'action."
+                 data-rating="7.0"
+                 data-image="{{ url_for('static', filename='css/images/tendance3.jpg') }}">
                 <img src="{{ url_for('static', filename='css/images/tendance3.jpg') }}" class="card-img-top rounded-top" alt="Affiche du film tendance">
                 <div class="card-body p-2 text-center">
                     <h6 class="card-title text-dark mb-0">Les Condés</h6>
@@ -407,7 +579,13 @@
             </div>
         </div>
         <div class="col">
-            <div class="card h-100 shadow-sm border-0">
+            <div class="card h-100 shadow-sm border-0 film-card"
+                 data-bs-toggle="modal" data-bs-target="#filmDetailsModal"
+                 data-title="Menteuse"
+                 data-genre="Drame, Thriller"
+                 data-description="Une femme prise dans un réseau de mensonges doit se battre pour la vérité."
+                 data-rating="7.4"
+                 data-image="{{ url_for('static', filename='css/images/tendance4.jpg') }}">
                 <img src="{{ url_for('static', filename='css/images/tendance4.jpg') }}" class="card-img-top rounded-top" alt="Affiche du film tendance">
                 <div class="card-body p-2 text-center">
                     <h6 class="card-title text-dark mb-0">Menteuse</h6>
@@ -415,7 +593,13 @@
             </div>
         </div>
         <div class="col">
-            <div class="card h-100 shadow-sm border-0">
+            <div class="card h-100 shadow-sm border-0 film-card"
+                 data-bs-toggle="modal" data-bs-target="#filmDetailsModal"
+                 data-title="Captain America"
+                 data-genre="Action, Super-héros"
+                 data-description="Le premier Avenger se bat pour la liberté dans cette aventure épique de super-héros."
+                 data-rating="8.6"
+                 data-image="{{ url_for('static', filename='css/images/tendance5.jpg') }}">
                 <img src="{{ url_for('static', filename='css/images/tendance5.jpg') }}" class="card-img-top rounded-top" alt="Affiche du film tendance">
                 <div class="card-body p-2 text-center">
                     <h6 class="card-title text-dark mb-0">Captian America </h6>
@@ -425,6 +609,73 @@
     </div>
 
 </div>
+
+<!-- Modal pour les détails du film -->
+<div class="modal fade" id="filmDetailsModal" tabindex="-1" aria-labelledby="filmDetailsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="filmDetailsModalLabel">Détails du Film</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <img id="modalFilmImage" src="" class="img-fluid rounded" alt="Affiche du film">
+                    </div>
+                    <div class="col-md-8">
+                        <h3 id="modalFilmTitle" class="text-dark fw-bold"></h3>
+                        <p class="text-muted"><strong class="text-primary">Genre:</strong> <span id="modalFilmGenre"></span></p>
+                        <p id="modalFilmDescription"></p>
+                        <div class="d-flex align-items-center mb-3">
+                            <strong class="text-primary me-2">Évaluation:</strong>
+                            <span id="modalFilmRating" class="badge bg-warning text-dark fs-6"><i class="bi bi-star-fill"></i> </span>
+                            <span class="ms-2 text-muted">/10</span>
+                        </div>
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-success btn-lg"><i class="bi bi-play-fill"></i> Regarder</button>
+                            <button class="btn btn-outline-primary btn-lg"><i class="bi bi-plus-circle-fill"></i> Ajouter à ma liste</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- JavaScript pour remplir la modale -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const filmDetailsModal = document.getElementById('filmDetailsModal');
+        filmDetailsModal.addEventListener('show.bs.modal', function (event) {
+            // Bouton qui a déclenché la modale
+            const button = event.relatedTarget;
+
+            // Récupérer les données des attributs data-*
+            const title = button.getAttribute('data-title');
+            const genre = button.getAttribute('data-genre');
+            const description = button.getAttribute('data-description');
+            const rating = button.getAttribute('data-rating');
+            const image = button.getAttribute('data-image');
+
+            // Mettre à jour le contenu de la modale
+            const modalTitle = filmDetailsModal.querySelector('#modalFilmTitle');
+            const modalGenre = filmDetailsModal.querySelector('#modalFilmGenre');
+            const modalDescription = filmDetailsModal.querySelector('#modalFilmDescription');
+            const modalRating = filmDetailsModal.querySelector('#modalFilmRating');
+            const modalImage = filmDetailsModal.querySelector('#modalFilmImage');
+
+            modalTitle.textContent = title;
+            modalGenre.textContent = genre;
+            modalDescription.textContent = description;
+            modalRating.innerHTML = `<i class="bi bi-star-fill"></i> ${rating}`; // Ajoute l'icône étoile
+            modalImage.src = image;
+        });
+    });
+</script>
 
 <!-- Footer -->
 <footer class="bg-dark text-white text-center py-4 mt-5">
