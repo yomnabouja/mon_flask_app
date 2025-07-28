@@ -50,13 +50,16 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      - name: Build and push Docker image to ACR
-        id: build-image
+      - name: Docker Login to ACR
+        # Étape séparée pour la connexion à ACR
         uses: azure/docker-login@v1
         with:
           login-server: ${{ env.AZURE_ACR_NAME }}.azurecr.io
           username: ${{ secrets.ACR_USERNAME }}
           password: ${{ secrets.ACR_PASSWORD }}
+
+      - name: Build and Push Docker Image to ACR
+        # Étape séparée pour la construction et le push
         run: |
           docker build . -t ${{ env.AZURE_ACR_NAME }}.azurecr.io/${{ env.DOCKER_IMAGE_NAME }}:${{ env.DOCKER_IMAGE_TAG }}
           docker push ${{ env.AZURE_ACR_NAME }}.azurecr.io/${{ env.DOCKER_IMAGE_NAME }}:${{ env.DOCKER_IMAGE_TAG }}
