@@ -4,6 +4,7 @@
 
 {% block content %}
 <div class="container my-5">
+    <!-- Section de bienvenue -->
     <div class="p-5 text-center bg-light rounded-3 shadow-sm mb-5">
         <h1 class="display-4 fw-bold text-primary mb-3">Bienvenue sur RecoFlix, {{ username }} !</h1>
         <p class="lead text-muted">
@@ -16,8 +17,10 @@
         </a>
     </div>
 
+    <!-- Conteneur pour les messages dynamiques (JavaScript) -->
     <div id="dynamic-alert-container" class="mt-3"></div>
 
+    <!-- Nouvelle Section : Film du Jour -->
     <h2 class="text-center text-primary mb-4">Film du Jour 🎬</h2>
     <div class="card mb-5 shadow-lg border-0">
         <div class="row g-0">
@@ -48,6 +51,41 @@
         </div>
     </div>
 
+    <!-- Conteneur pour les messages dynamiques (JavaScript) -->
+    <div id="dynamic-alert-container" class="mt-3"></div>
+
+    <!-- Nouvelle Section : Film du Jour -->
+    <h2 class="text-center text-primary mb-4">Film du Jour 🎬</h2>
+    <div class="card mb-5 shadow-lg border-0">
+        <div class="row g-0">
+            <div class="col-md-4">
+                <img src="{{ url_for('static', filename='css/images/voyage1.jpg') }}" class="img-fluid rounded-start h-100 object-fit-cover" alt="Affiche du Film du Jour">
+            </div>
+            <div class="col-md-8">
+                <div class="card-body p-4">
+                    <h3 class="card-title text-dark fw-bold">Le Voyage de Chihiro</h3>
+                    <p class="card-text text-muted">Genre: Animation, Fantastique, Aventure</p>
+                    <p class="card-text">
+                        Chihiro, une jeune fille de 10 ans, déménage avec ses parents. Sur la route, ils s'arrêtent devant un mystérieux tunnel qui les mène vers un monde peuplé de dieux et d'esprits. Un chef-d'œuvre de l'animation japonaise.
+                    </p>
+                    <div class="d-flex justify-content-between align-items-center mt-3">
+                        <span class="badge bg-warning text-dark"><i class="bi bi-star-fill"></i> 9.0/10</span>
+                        <button type="button" class="btn btn-primary view-details-btn"
+                                data-bs-toggle="modal" data-bs-target="#filmDetailsModal"
+                                data-title="Le Voyage de Chihiro"
+                                data-genre="Animation, Fantastique, Aventure"
+                                data-description="Chihiro, une jeune fille de 10 ans, déménage avec ses parents. Sur la route, ils s'arrêtent devant un mystérieux tunnel qui les mène vers un monde peuplé de dieux et d'esprits. Un chef-d'œuvre de l'animation japonaise."
+                                data-rating="9.0"
+                                data-image="{{ url_for('static', filename='css/images/voyage1.jpg') }}">
+                            Voir les détails <i class="bi bi-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Section de recherche de films -->
     <div class="card shadow-sm mb-5">
         <div class="card-body p-4">
             <h2 class="card-title text-center text-secondary mb-4">Trouvez votre prochain film</h2>
@@ -61,6 +99,7 @@
         </div>
     </div>
 
+    <!-- Nouvelle Section : Carrousel des Films les Plus Vus -->
     <h2 class="text-center text-primary mb-4">Films les Plus Vus <i class="bi bi-eye-fill"></i></h2>
     <div id="mostViewedCarousel" class="carousel slide mb-5" data-bs-ride="carousel">
         <div class="carousel-inner">
@@ -225,6 +264,7 @@
         </button>
     </div>
 
+    <!-- Section des recommandations -->
     <h2 class="text-center text-primary mb-4">Vos Recommandations Personnalisées</h2>
     <div class="row row-cols-1 row-cols-md-4 g-4 mb-5">
         <div class="col">
@@ -329,6 +369,7 @@
         </div>
     </div>
 
+    <!-- Nouvelle Section : Catégories Populaires -->
     <h2 class="text-center text-primary mb-4">Catégories Populaires <i class="bi bi-tags-fill"></i></h2>
     <div class="d-flex flex-wrap justify-content-center gap-2 mb-5">
         <a href="#" class="btn btn-outline-secondary rounded-pill">Action</a>
@@ -341,6 +382,7 @@
         <a href="#" class="btn btn-outline-secondary rounded-pill">Romance</a>
     </div>
 
+    <!-- Nouvelle Section : Acteurs/Réalisateurs à Suivre -->
     <h2 class="text-center text-primary mb-4">Acteurs & Réalisateurs à Suivre <i class="bi bi-person-badge-fill"></i></h2>
     <div class="row row-cols-1 row-cols-md-4 g-4 mb-5">
         <div class="col">
@@ -377,6 +419,7 @@
         </div>
     </div>
 
+    <!-- Nouvelle Section : Statistiques Personnelles -->
     <h2 class="text-center text-primary mb-4">Vos Statistiques Personnelles <i class="bi bi-graph-up"></i></h2>
     <div class="row row-cols-1 row-cols-md-3 g-4 mb-5">
         <div class="col">
@@ -408,6 +451,7 @@
         </div>
     </div>
 
+    <!-- Nouvelle Section : Recommandation Spéciale -->
     <div class="p-5 text-center bg-dark text-white rounded-3 shadow-lg mb-5">
         <h2 class="display-5 fw-bold mb-3">Envie d'une Recommandation Spéciale ?</h2>
         <p class="lead">
@@ -416,6 +460,7 @@
         <button class="btn btn-light btn-lg mt-3">Obtenir une Recommandation Unique <i class="bi bi-magic"></i></button>
     </div>
 
+    <!-- Section Liens Rapides (existante, déplacée) -->
     <h2 class="text-center text-primary mb-4">Accès Rapide</h2>
     <div class="row row-cols-1 row-cols-md-3 g-4 mb-5">
         <div class="col">
@@ -450,6 +495,7 @@
         </div>
     </div>
 
+    <!-- Section Films Récemment Vus (existante) -->
     <h2 class="text-center text-primary mb-4">Récemment Vus</h2>
     <div class="row row-cols-1 row-cols-md-5 g-4 mb-5">
         <div class="col">
@@ -469,56 +515,131 @@
         <div class="col">
             <div class="card h-100 shadow-sm border-0 film-card"
                  data-bs-toggle="modal" data-bs-target="#filmDetailsModal"
-                 data-title="Film récemment vu 2"
-                 data-genre="Documentaire"
-                 data-description="Un documentaire fascinant sur la nature sauvage."
+                 data-title="Les Chevaliers De Zodiaque"
+                 data-genre="Animation, Action, Fantastique"
+                 data-description="Les légendaires Chevaliers du Zodiaque reviennent pour protéger la Terre des forces du mal."
                  data-rating="8.2"
                  data-image="{{ url_for('static', filename='css/images/vu film2.jpg') }}">
                 <img src="{{ url_for('static', filename='css/images/vu film2.jpg') }}" class="card-img-top rounded-top" alt="Affiche du film vu">
                 <div class="card-body p-2 text-center">
-                    <h6 class="card-title text-dark mb-0">Film récemment vu 2</h6>
+                    <h6 class="card-title text-dark mb-0">Les Chevaliers De Zodiaque </h6>
                 </div>
             </div>
         </div>
         <div class="col">
             <div class="card h-100 shadow-sm border-0 film-card"
                  data-bs-toggle="modal" data-bs-target="#filmDetailsModal"
-                 data-title="Film récemment vu 3"
-                 data-genre="Comédie"
-                 data-description="Une comédie légère pour passer un bon moment."
-                 data-rating="6.5"
+                 data-title="Petit Piaf"
+                 data-genre="Animation, Comédie"
+                 data-description="Les aventures hilarantes d'un petit piaf qui découvre le monde."
+                 data-rating="7.0"
                  data-image="{{ url_for('static', filename='css/images/vu film3.jpg') }}">
                 <img src="{{ url_for('static', filename='css/images/vu film3.jpg') }}" class="card-img-top rounded-top" alt="Affiche du film vu">
                 <div class="card-body p-2 text-center">
-                    <h6 class="card-title text-dark mb-0">Film récemment vu 3</h6>
+                    <h6 class="card-title text-dark mb-0">Petit Piaf</h6>
                 </div>
             </div>
         </div>
         <div class="col">
             <div class="card h-100 shadow-sm border-0 film-card"
                  data-bs-toggle="modal" data-bs-target="#filmDetailsModal"
-                 data-title="Film récemment vu 4"
-                 data-genre="Action"
-                 data-description="Un film d'action rempli d'adrénaline."
-                 data-rating="7.9"
-                 data-image="{{ url_for('static', filename='css/images/film4.jpg') }}">
-                <img src="{{ url_for('static', filename='css/images/film4.jpg') }}" class="card-img-top rounded-top" alt="Affiche du film vu">
+                 data-title="Barbie"
+                 data-genre="Comédie, Fantastique"
+                 data-description="Barbie quitte Barbieland pour le monde réel dans cette comédie colorée et pleine de surprises."
+                 data-rating="7.5"
+                 data-image="{{ url_for('static', filename='css/images/film3.jpg') }}">
+                <img src="{{ url_for('static', filename='css/images/film3.jpg') }}" class="card-img-top rounded-top" alt="Affiche du film vu">
                 <div class="card-body p-2 text-center">
-                    <h6 class="card-title text-dark mb-0">Film récemment vu 4</h6>
+                    <h6 class="card-title text-dark mb-0">Barbie </h6>
                 </div>
             </div>
         </div>
         <div class="col">
             <div class="card h-100 shadow-sm border-0 film-card"
                  data-bs-toggle="modal" data-bs-target="#filmDetailsModal"
-                 data-title="Film récemment vu 5"
-                 data-genre="Horreur"
-                 data-description="Un film effrayant pour les amateurs de frissons."
-                 data-rating="5.8"
+                 data-title="International Ocean"
+                 data-genre="Documentaire"
+                 data-description="Explorez les merveilles et les mystères des océans du monde."
+                 data-rating="8.9"
+                 data-image="{{ url_for('static', filename='css/images/vu film5.jpg') }}">
+                <img src="{{ url_for('static', filename='css/images/vu film5.jpg') }}" class="card-img-top rounded-top" alt="Affiche du film vu">
+                <div class="card-body p-2 text-center">
+                    <h6 class="card-title text-dark mb-0">International Ocean </h6>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Section Films Tendances (existante) -->
+    <h2 class="text-center text-primary mb-4">Films Tendances</h2>
+    <div class="row row-cols-1 row-cols-md-5 g-4 mb-5">
+        <div class="col">
+            <div class="card h-100 shadow-sm border-0 film-card"
+                 data-bs-toggle="modal" data-bs-target="#filmDetailsModal"
+                 data-title="Sinners"
+                 data-genre="Drame, Thriller"
+                 data-description="Un thriller sombre qui explore les profondeurs de l'âme humaine et ses péchés."
+                 data-rating="7.1"
                  data-image="{{ url_for('static', filename='css/images/tendance1.jpg') }}">
-                <img src="{{ url_for('static', filename='css/images/tendance1.jpg') }}" class="card-img-top rounded-top" alt="Affiche du film vu">
+                <img src="{{ url_for('static', filename='css/images/tendance1.jpg') }}" class="card-img-top rounded-top" alt="Affiche du film tendance">
                 <div class="card-body p-2 text-center">
-                    <h6 class="card-title text-dark mb-0">Film récemment vu 5</h6>
+                    <h6 class="card-title text-dark mb-0">Sinners</h6>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card h-100 shadow-sm border-0 film-card"
+                 data-bs-toggle="modal" data-bs-target="#filmDetailsModal"
+                 data-title="One Of Them Days"
+                 data-genre="Comédie"
+                 data-description="Une journée ordinaire qui tourne au chaos dans cette comédie hilarante."
+                 data-rating="6.5"
+                 data-image="{{ url_for('static', filename='css/images/tendance2.jpg') }}">
+                <img src="{{ url_for('static', filename='css/images/tendance2.jpg') }}" class="card-img-top rounded-top" alt="Affiche du film tendance">
+                <div class="card-body p-2 text-center">
+                    <h6 class="card-title text-dark mb-0">One Of Them Days</h6>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card h-100 shadow-sm border-0 film-card"
+                 data-bs-toggle="modal" data-bs-target="#filmDetailsModal"
+                 data-title="Les Condés"
+                 data-genre="Comédie, Action"
+                 data-description="Deux policiers que tout oppose doivent faire équipe dans cette comédie d'action."
+                 data-rating="7.0"
+                 data-image="{{ url_for('static', filename='css/images/tendance3.jpg') }}">
+                <img src="{{ url_for('static', filename='css/images/tendance3.jpg') }}" class="card-img-top rounded-top" alt="Affiche du film tendance">
+                <div class="card-body p-2 text-center">
+                    <h6 class="card-title text-dark mb-0">Les Condés</h6>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card h-100 shadow-sm border-0 film-card"
+                 data-bs-toggle="modal" data-bs-target="#filmDetailsModal"
+                 data-title="Menteuse"
+                 data-genre="Drame, Thriller"
+                 data-description="Une femme prise dans un réseau de mensonges doit se battre pour la vérité."
+                 data-rating="7.4"
+                 data-image="{{ url_for('static', filename='css/images/tendance4.jpg') }}">
+                <img src="{{ url_for('static', filename='css/images/tendance4.jpg') }}" class="card-img-top rounded-top" alt="Affiche du film tendance">
+                <div class="card-body p-2 text-center">
+                    <h6 class="card-title text-dark mb-0">Menteuse</h6>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card h-100 shadow-sm border-0 film-card"
+                 data-bs-toggle="modal" data-bs-target="#filmDetailsModal"
+                 data-title="Captain America"
+                 data-genre="Action, Super-héros"
+                 data-description="Le premier Avenger se bat pour la liberté dans cette aventure épique de super-héros."
+                 data-rating="8.6"
+                 data-image="{{ url_for('static', filename='css/images/tendance5.jpg') }}">
+                <img src="{{ url_for('static', filename='css/images/tendance5.jpg') }}" class="card-img-top rounded-top" alt="Affiche du film tendance">
+                <div class="card-body p-2 text-center">
+                    <h6 class="card-title text-dark mb-0">Captian America </h6>
                 </div>
             </div>
         </div>
@@ -526,6 +647,7 @@
 
 </div>
 
+<!-- Modal pour les détails du film -->
 <div class="modal fade" id="filmDetailsModal" tabindex="-1" aria-labelledby="filmDetailsModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
@@ -561,6 +683,130 @@
     </div>
 </div>
 
+<!-- JavaScript pour remplir la modale -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const filmDetailsModal = document.getElementById('filmDetailsModal');
+        const dynamicAlertContainer = document.getElementById('dynamic-alert-container');
+
+        // Fonction pour afficher une alerte dynamique
+        function showAlert(message, type = 'info') {
+            const alertHtml = `
+                <div class="alert alert-${type} alert-dismissible fade show" role="alert">
+                    ${message}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            `;
+            dynamicAlertContainer.innerHTML = alertHtml;
+            // Optionnel: masquer l'alerte après un certain temps
+            setTimeout(() => {
+                const alertElement = dynamicAlertContainer.querySelector('.alert');
+                if (alertElement) {
+                    new bootstrap.Alert(alertElement).close();
+                }
+            }, 5000); // Masquer après 5 secondes
+        }
+
+        filmDetailsModal.addEventListener('show.bs.modal', function (event) {
+            // Bouton qui a déclenché la modale
+            const button = event.relatedTarget;
+
+            // Récupérer les données des attributs data-*
+            const title = button.getAttribute('data-title');
+            const genre = button.getAttribute('data-genre');
+            const description = button.getAttribute('data-description');
+            const rating = button.getAttribute('data-rating');
+            const image = button.getAttribute('data-image');
+
+            // Mettre à jour le contenu de la modale
+            const modalTitle = filmDetailsModal.querySelector('#modalFilmTitle');
+            const modalGenre = filmDetailsModal.querySelector('#modalFilmGenre');
+            const modalDescription = filmDetailsModal.querySelector('#modalFilmDescription');
+            const modalRating = filmDetailsModal.querySelector('#modalFilmRating');
+            const modalImage = filmDetailsModal.querySelector('#modalFilmImage');
+            const playFilmBtn = filmDetailsModal.querySelector('#playFilmBtn');
+            const addToListBtn = filmDetailsModal.querySelector('#addToListBtn');
+
+            modalTitle.textContent = title;
+            modalGenre.textContent = genre;
+            modalDescription.textContent = description;
+            modalRating.innerHTML = `<i class="bi bi-star-fill"></i> ${rating}`; // Ajoute l'icône étoile
+            modalImage.src = image;
+
+            // Stocker les données du film sur les boutons pour un accès facile dans les gestionnaires de clic
+            playFilmBtn.dataset.title = title;
+            addToListBtn.dataset.title = title;
+            addToListBtn.dataset.genre = genre;
+            addToListBtn.dataset.description = description;
+            addToListBtn.dataset.rating = rating;
+            addToListBtn.dataset.image = image;
+        });
+
+        // Gestionnaire d'événements pour le bouton "Regarder"
+        document.getElementById('playFilmBtn').addEventListener('click', async function() {
+            const filmTitle = this.dataset.title;
+            // Maintenant, nous faisons un appel AJAX au serveur
+            try {
+                const response = await fetch('{{ url_for('api_routes.watch_film') }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ title: filmTitle }),
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    showAlert(result.message, result.status);
+                } else {
+                    showAlert(result.message || 'Erreur lors du lancement du film.', 'danger');
+                }
+            } catch (error) {
+                console.error('Erreur:', error);
+                showAlert('Une erreur réseau est survenue lors du lancement du film. Veuillez réessayer.', 'danger');
+            } finally {
+                $('#filmDetailsModal').modal('hide'); // Masquer la modale après l'action
+            }
+        });
+
+        // Gestionnaire d'événements pour le bouton "Ajouter à ma liste"
+        document.getElementById('addToListBtn').addEventListener('click', async function() {
+            const filmData = {
+                title: this.dataset.title,
+                genre: this.dataset.genre,
+                description: this.dataset.description,
+                rating: parseFloat(this.dataset.rating), // Convertir l'évaluation en flottant
+                image: this.dataset.image
+            };
+
+            try {
+                const response = await fetch('{{ url_for('api_routes.add_to_list') }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(filmData),
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    showAlert(result.message, result.status);
+                } else {
+                    showAlert(result.message || 'Erreur lors de l\'ajout à la liste.', 'danger');
+                }
+            } catch (error) {
+                console.error('Erreur:', error);
+                showAlert('Une erreur réseau est survenue. Veuillez réessayer.', 'danger');
+            } finally {
+                $('#filmDetailsModal').modal('hide'); // Masquer la modale après l'action
+            }
+        });
+    });
+</script>
+
+<!-- Footer -->
 <footer class="bg-dark text-white text-center py-4 mt-5">
     <div class="container">
         <p>&copy; 2025 RecoFlix. Tous droits réservés.</p>
@@ -571,180 +817,4 @@
         </div>
     </div>
 </footer>
-{% endblock %}
-
-{% block scripts %}
-{{ super() }} {# Conserve les scripts du template parent si vous en avez #}
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const filmDetailsModal = document.getElementById('filmDetailsModal');
-        const dynamicAlertContainer = document.getElementById('dynamic-alert-container');
-
-        // IMPORTANT : Vérifiez que Bootstrap JavaScript est chargé.
-        // Si cette ligne affiche une erreur dans la console du navigateur, c'est que Bootstrap n'est pas inclus correctement.
-        if (typeof bootstrap === 'undefined' || !bootstrap.Modal) {
-            console.error("Erreur : Bootstrap JavaScript ou ses composants (comme Modal) ne sont pas chargés. " +
-                          "Assurez-vous d'inclure les scripts Bootstrap 5 (par exemple, bundle.min.js) AVANT votre script.");
-            // Arrête l'exécution du script pour éviter d'autres erreurs si Bootstrap est manquant
-            return; 
-        }
-
-        /**
-         * Affiche une alerte dynamique en haut de la page.
-         * @param {string} message - Le message à afficher.
-         * @param {string} type - Le type d'alerte (par exemple, 'info', 'success', 'warning', 'danger').
-         */
-        function showAlert(message, type = 'info') {
-            const alertHtml = `
-                <div class="alert alert-${type} alert-dismissible fade show" role="alert">
-                    ${message}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            `;
-            // Vider le conteneur avant d'ajouter la nouvelle alerte pour éviter l'accumulation
-            // Si vous voulez que les alertes s'empilent, vous pouvez utiliser `insertAdjacentHTML('afterbegin', alertHtml)`
-            dynamicAlertContainer.innerHTML = ''; 
-            dynamicAlertContainer.insertAdjacentHTML('beforeend', alertHtml);
-
-            // Masquer l'alerte automatiquement après 5 secondes
-            setTimeout(() => {
-                const alertElement = dynamicAlertContainer.querySelector('.alert');
-                if (alertElement) {
-                    // Obtient l'instance de l'alerte Bootstrap ou en crée une nouvelle pour pouvoir la fermer.
-                    const bsAlert = bootstrap.Alert.getInstance(alertElement) || new bootstrap.Alert(alertElement);
-                    bsAlert.close();
-                }
-            }, 5000); // 5000 millisecondes = 5 secondes
-        }
-
-        // Événement déclenché lorsque la modale des détails du film est sur le point d'être affichée.
-        filmDetailsModal.addEventListener('show.bs.modal', function (event) {
-            const button = event.relatedTarget; // Le bouton HTML qui a déclenché l'ouverture de la modale.
-
-            // Récupère toutes les données du film depuis les attributs 'data-*' du bouton.
-            const filmId = button.getAttribute('data-film-id'); // ID du film (ajouté pour la route /watch et /add_to_list)
-            const title = button.getAttribute('data-title');
-            const genre = button.getAttribute('data-genre');
-            const description = button.getAttribute('data-description');
-            const rating = button.getAttribute('data-rating');
-            const image = button.getAttribute('data-image');
-            const videoUrl = button.getAttribute('data-video-url'); // URL de la vidéo (ajouté pour la lecture)
-
-            // Sélectionne les éléments HTML à l'intérieur de la modale pour y injecter les données.
-            const modalTitle = filmDetailsModal.querySelector('#modalFilmTitle');
-            const modalGenre = filmDetailsModal.querySelector('#modalFilmGenre');
-            const modalDescription = filmDetailsModal.querySelector('#modalFilmDescription');
-            const modalRating = filmDetailsModal.querySelector('#modalFilmRating');
-            const modalImage = filmDetailsModal.querySelector('#modalFilmImage');
-            const playFilmBtn = filmDetailsModal.querySelector('#playFilmBtn');
-            const addToListBtn = filmDetailsModal.querySelector('#addToListBtn');
-
-            // Met à jour le contenu textuel et les attributs de la modale avec les données du film.
-            modalTitle.textContent = title || 'Titre Inconnu';
-            modalGenre.textContent = genre || 'N/A';
-            modalDescription.textContent = description || 'Pas de description disponible.';
-            modalRating.innerHTML = `<i class="bi bi-star-fill"></i> ${rating || 'N/A'}`; // Ajoute l'icône étoile.
-            modalImage.src = image || 'https://via.placeholder.com/300x450?text=No+Image'; // Image par défaut si manquante.
-            modalImage.alt = title || 'Image du film';
-
-            // Stocke les données complètes du film directement sur les boutons "Regarder" et "Ajouter à ma liste".
-            // Cela permet d'accéder facilement à ces données quand les boutons sont cliqués.
-            playFilmBtn.dataset.filmId = filmId;
-            playFilmBtn.dataset.videoUrl = videoUrl;
-            playFilmBtn.dataset.title = title; // Utile pour les messages d'alerte
-
-            addToListBtn.dataset.filmId = filmId;
-            addToListBtn.dataset.title = title;
-            addToListBtn.dataset.genre = genre;
-            addToListBtn.dataset.description = description;
-            addToListBtn.dataset.rating = rating;
-            addToListBtn.dataset.image = image;
-            addToListBtn.dataset.videoUrl = videoUrl; // Très important : s'assurer que l'URL vidéo est transmise.
-
-            // Affiche ou masque le bouton "Regarder" en fonction de la présence d'une URL vidéo valide.
-            // La comparaison 'None' est importante car Jinja peut renvoyer la chaîne 'None' pour une valeur Python None.
-            if (videoUrl && videoUrl !== 'None' && videoUrl.trim() !== '') {
-                playFilmBtn.classList.remove('d-none'); // Retire la classe qui masque le bouton.
-            } else {
-                playFilmBtn.classList.add('d-none'); // Ajoute la classe pour masquer le bouton.
-            }
-        });
-
-        // Gestionnaire d'événements pour le bouton "Regarder" dans la modale.
-        document.getElementById('playFilmBtn').addEventListener('click', function() {
-            const filmId = this.dataset.filmId;
-            const filmTitle = this.dataset.title; // Pour le message d'alerte
-            const videoUrl = this.dataset.videoUrl;
-
-            // Ferme la modale de détails avant de rediriger.
-            const modalInstance = bootstrap.Modal.getInstance(filmDetailsModal);
-            if (modalInstance) {
-                modalInstance.hide();
-            }
-
-            // Vérifie si l'ID du film et l'URL vidéo sont disponibles.
-            if (filmId && videoUrl && videoUrl !== 'None' && videoUrl.trim() !== '') {
-                // Redirige l'utilisateur vers la page de lecture du film.
-                // {{ url_for('api_routes.watch_film', film_id=0) }} est un placeholder Jinja.
-                // .replace('0', filmId) insère l'ID réel du film dans l'URL.
-                window.location.href = `{{ url_for('api_routes.watch_film', film_id=0) }}`.replace('0', filmId);
-            } else {
-                showAlert(`Désolé, impossible de lancer "${filmTitle}". URL vidéo manquante ou invalide.`, 'danger');
-            }
-        });
-
-        // Gestionnaire d'événements pour le bouton "Ajouter à ma liste" dans la modale.
-        document.getElementById('addToListBtn').addEventListener('click', async function() {
-            // Collecte toutes les données du film à envoyer au backend.
-            const filmData = {
-                film_id: this.dataset.filmId, // Utilise l'ID du film, c'est plus robuste que le titre seul.
-                title: this.dataset.title,
-                genre: this.dataset.genre,
-                description: this.dataset.description,
-                // Convertit l'évaluation en nombre flottant. Si invalide, utilise `null`.
-                rating: parseFloat(this.dataset.rating) || null, 
-                image: this.dataset.image,
-                video_url: this.dataset.videoUrl // Inclut l'URL vidéo pour le backend.
-            };
-
-            // Nettoie l'objet filmData en supprimant les propriétés qui sont `undefined`, `null`, `'None'` ou vides.
-            for (const key in filmData) {
-                if (filmData[key] === 'undefined' || filmData[key] === null || filmData[key] === 'None' || (typeof filmData[key] === 'string' && filmData[key].trim() === '')) {
-                    delete filmData[key];
-                }
-            }
-
-            try {
-                // Envoie une requête POST asynchrone au backend Flask pour ajouter le film.
-                const response = await fetch('{{ url_for('api_routes.add_to_list') }}', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json', // Indique que nous envoyons du JSON.
-                    },
-                    body: JSON.stringify(filmData), // Convertit l'objet JavaScript en chaîne JSON.
-                });
-
-                const result = await response.json(); // Parse la réponse JSON du serveur.
-
-                // Vérifie si la requête HTTP a réussi (statut 2xx).
-                if (response.ok) { 
-                    showAlert(result.message, result.status); // Affiche le message du serveur.
-                } else { 
-                    // Si le serveur a renvoyé un statut d'erreur (par exemple 400, 401, 500).
-                    showAlert(result.message || 'Erreur lors de l\'ajout à la liste.', 'danger');
-                }
-            } catch (error) {
-                // Gère les erreurs réseau (par exemple, serveur injoignable).
-                console.error('Erreur lors de l\'ajout à la liste:', error);
-                showAlert('Une erreur réseau est survenue. Veuillez réessayer.', 'danger');
-            } finally {
-                // Ferme toujours la modale après que l'action soit terminée, qu'elle ait réussi ou échoué.
-                const modalInstance = bootstrap.Modal.getInstance(filmDetailsModal);
-                if (modalInstance) {
-                    modalInstance.hide();
-                }
-            }
-        });
-    });
-</script>
 {% endblock %}
