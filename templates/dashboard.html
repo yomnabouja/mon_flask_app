@@ -4,6 +4,7 @@
 
 {% block content %}
 <div class="container my-5">
+    <!-- Section de bienvenue -->
     <div class="p-5 text-center bg-light rounded-3 shadow-sm mb-5">
         <h1 class="display-4 fw-bold text-primary mb-3">Bienvenue sur RecoFlix, {{ username }} !</h1>
         <p class="lead text-muted">
@@ -16,8 +17,10 @@
         </a>
     </div>
 
+    <!-- Conteneur pour les messages dynamiques (JavaScript) -->
     <div id="dynamic-alert-container" class="mt-3"></div>
 
+    <!-- Nouvelle Section : Film du Jour (maintenant unique) -->
     <h2 class="text-center text-primary mb-4">Film du Jour 🎬</h2>
     <div class="card mb-5 shadow-lg border-0">
         <div class="row g-0">
@@ -49,6 +52,7 @@
         </div>
     </div>
 
+    <!-- Section de recherche de films -->
     <div class="card shadow-sm mb-5">
         <div class="card-body p-4">
             <h2 class="card-title text-center text-secondary mb-4">Trouvez votre prochain film</h2>
@@ -62,6 +66,7 @@
         </div>
     </div>
 
+    <!-- Nouvelle Section : Carrousel des Films les Plus Vus -->
     <h2 class="text-center text-primary mb-4">Films les Plus Vus <i class="bi bi-eye-fill"></i></h2>
     <div id="mostViewedCarousel" class="carousel slide mb-5" data-bs-ride="carousel">
         <div class="carousel-inner">
@@ -236,6 +241,7 @@
         </button>
     </div>
 
+    <!-- Section des recommandations -->
     <h2 class="text-center text-primary mb-4">Vos Recommandations Personnalisées</h2>
     <div class="row row-cols-1 row-cols-md-4 g-4 mb-5">
         <div class="col">
@@ -348,6 +354,7 @@
         </div>
     </div>
 
+    <!-- Nouvelle Section : Catégories Populaires -->
     <h2 class="text-center text-primary mb-4">Catégories Populaires <i class="bi bi-tags-fill"></i></h2>
     <div class="d-flex flex-wrap justify-content-center gap-2 mb-5">
         <a href="#" class="btn btn-outline-secondary rounded-pill">Action</a>
@@ -360,6 +367,7 @@
         <a href="#" class="btn btn-outline-secondary rounded-pill">Romance</a>
     </div>
 
+    <!-- Nouvelle Section : Acteurs/Réalisateurs à Suivre -->
     <h2 class="text-center text-primary mb-4">Acteurs & Réalisateurs à Suivre <i class="bi bi-person-badge-fill"></i></h2>
     <div class="row row-cols-1 row-cols-md-4 g-4 mb-5">
         <div class="col">
@@ -396,6 +404,7 @@
         </div>
     </div>
 
+    <!-- Nouvelle Section : Statistiques Personnelles -->
     <h2 class="text-center text-primary mb-4">Vos Statistiques Personnelles <i class="bi bi-graph-up"></i></h2>
     <div class="row row-cols-1 row-cols-md-3 g-4 mb-5">
         <div class="col">
@@ -427,6 +436,7 @@
         </div>
     </div>
 
+    <!-- Nouvelle Section : Recommandation Spéciale -->
     <div class="p-5 text-center bg-dark text-white rounded-3 shadow-lg mb-5">
         <h2 class="display-5 fw-bold mb-3">Envie d'une Recommandation Spéciale ?</h2>
         <p class="lead">
@@ -435,6 +445,7 @@
         <button class="btn btn-light btn-lg mt-3">Obtenir une Recommandation Unique <i class="bi bi-magic"></i></button>
     </div>
 
+    <!-- Section Liens Rapides (existante, déplacée) -->
     <h2 class="text-center text-primary mb-4">Accès Rapide</h2>
     <div class="row row-cols-1 row-cols-md-3 g-4 mb-5">
         <div class="col">
@@ -469,12 +480,13 @@
         </div>
     </div>
 
+    <!-- Section Films Récemment Vus (existante) -->
     <h2 class="text-center text-primary mb-4">Récemment Vus</h2>
     <div class="row row-cols-1 row-cols-md-5 g-4 mb-5">
         <div class="col">
             <div class="card h-100 shadow-sm border-0 film-card"
                  data-bs-toggle="modal" data-bs-target="#filmDetailsModal"
-                 data-title="Viaiana 2"
+                 data-title="Vaiana 2"
                  data-genre="Animation, Aventure"
                  data-description="Une suite captivante avec de nouveaux défis et des personnages inoubliables."
                  data-rating="7.8"
@@ -540,7 +552,7 @@
                  data-rating="7.9"
                  data-image="{{ url_for('static', filename='css/images/La la land.jpg') }}"
                  data-video-url="https://www.youtube.com/embed/dQw4w9WgXcQ"> {# Exemple d'URL vidéo #}
-                <img src="{{ url_for('static', filename='css/images/La la land.jpg') }}" class-img-top rounded-top" alt="Affiche du film vu">
+                <img src="{{ url_for('static', filename='css/images/La la land.jpg') }}" class="card-img-top rounded-top" alt="Affiche du film vu">
                 <div class="card-body p-2 text-center">
                     <h6 class="card-title text-dark mb-0">La La Land</h6>
                 </div>
@@ -549,6 +561,7 @@
     </div>
 </div>
 
+<!-- Modal pour les détails du film -->
 <div class="modal fade" id="filmDetailsModal" tabindex="-1" aria-labelledby="filmDetailsModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
@@ -578,7 +591,8 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                <button type="button" class="btn btn-primary"><i class="bi bi-heart-fill"></i> Ajouter aux favoris</button>
+                <button type="button" class="btn btn-primary" id="addToListBtn"><i class="bi bi-heart-fill"></i> Ajouter aux favoris</button>
+                <button type="button" class="btn btn-success" id="watchNowBtn"><i class="bi bi-play-circle-fill"></i> Regarder maintenant</button>
             </div>
         </div>
     </div>
@@ -591,17 +605,24 @@
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const filmDetailsModal = document.getElementById('filmDetailsModal');
+        const watchNowBtn = document.getElementById('watchNowBtn');
+        const addToListBtn = document.getElementById('addToListBtn'); // Récupérer le bouton "Ajouter aux favoris"
+
+        let currentFilmData = {}; // Stocker les données du film actuellement affiché dans la modale
+
         filmDetailsModal.addEventListener('show.bs.modal', function (event) {
             // Button that triggered the modal
             const button = event.relatedTarget;
 
             // Extract info from data-bs-* attributes
-            const title = button.getAttribute('data-title');
-            const genre = button.getAttribute('data-genre');
-            const description = button.getAttribute('data-description');
-            const rating = button.getAttribute('data-rating');
-            const image = button.getAttribute('data-image');
-            const videoUrl = button.getAttribute('data-video-url');
+            currentFilmData = { // Stocker toutes les données pertinentes
+                title: button.getAttribute('data-title'),
+                genre: button.getAttribute('data-genre'),
+                description: button.getAttribute('data-description'),
+                rating: parseFloat(button.getAttribute('data-rating')), // Convertir en nombre
+                image: button.getAttribute('data-image'),
+                video_url: button.getAttribute('data-video-url')
+            };
 
             // Update the modal's content.
             const modalTitle = filmDetailsModal.querySelector('#modalFilmTitle');
@@ -611,17 +632,15 @@
             const modalImage = filmDetailsModal.querySelector('#modalFilmImage');
             const modalVideo = filmDetailsModal.querySelector('#modalFilmVideo');
 
-            modalTitle.textContent = title;
-            modalGenre.textContent = 'Genre: ' + genre;
-            modalDescription.textContent = description;
-            modalRating.textContent = rating;
-            modalImage.src = image;
+            modalTitle.textContent = currentFilmData.title;
+            modalGenre.textContent = 'Genre: ' + currentFilmData.genre;
+            modalDescription.textContent = currentFilmData.description;
+            modalRating.textContent = currentFilmData.rating;
+            modalImage.src = "{{ url_for('static', filename='') }}" + currentFilmData.image; // Utiliser url_for pour les images statiques
 
             // Set the video URL. Ensure it's an embeddable URL.
-            // For YouTube, you might need to convert watch URLs to embed URLs:
-            // e.g., https://www.youtube.com/watch?v=VIDEO_ID -> https://www.youtube.com/embed/VIDEO_ID
-            if (videoUrl) {
-                const embedUrl = videoUrl.replace("watch?v=", "embed/");
+            if (currentFilmData.video_url) {
+                const embedUrl = currentFilmData.video_url.replace("watch?v=", "embed/");
                 modalVideo.src = embedUrl;
             } else {
                 modalVideo.src = ""; // Clear video if no URL is provided
@@ -632,17 +651,74 @@
         filmDetailsModal.addEventListener('hidden.bs.modal', function (event) {
             const modalVideo = filmDetailsModal.querySelector('#modalFilmVideo');
             modalVideo.src = "";
+            currentFilmData = {}; // Réinitialiser les données du film
         });
 
-        // Example of adding a dynamic alert (can be triggered by backend or other JS logic)
-        const dynamicAlertContainer = document.getElementById('dynamic-alert-container');
-        if (dynamicAlertContainer) {
-            // Simulate a message from the backend (e.g., successful login message)
-            const urlParams = new URLSearchParams(window.location.search);
-            const message = urlParams.get('message');
-            const category = urlParams.get('category');
+        // Gérer le clic sur le bouton "Regarder maintenant"
+        watchNowBtn.addEventListener('click', async function() {
+            if (!currentFilmData.title) {
+                displayAlert('Impossible de lancer le film : données manquantes.', 'danger');
+                return;
+            }
 
-            if (message && category) {
+            try {
+                const response = await fetch("{{ url_for('api_routes.watch_film') }}", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ title: currentFilmData.title })
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    displayAlert(result.message, 'success');
+                    // Optionnel: si vous voulez rediriger ou faire quelque chose avec video_url
+                    // window.open(result.video_url, '_blank'); // Ouvre la vidéo dans un nouvel onglet
+                } else {
+                    displayAlert(result.message, 'danger');
+                }
+            } catch (error) {
+                console.error('Erreur lors de l\'appel à watch_film:', error);
+                displayAlert('Une erreur réseau est survenue lors du lancement du film.', 'danger');
+            }
+        });
+
+        // Gérer le clic sur le bouton "Ajouter aux favoris"
+        addToListBtn.addEventListener('click', async function() {
+            if (!currentFilmData.title) {
+                displayAlert('Impossible d\'ajouter le film : données manquantes.', 'danger');
+                return;
+            }
+
+            try {
+                const response = await fetch("{{ url_for('api_routes.add_to_list') }}", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(currentFilmData) // Envoyer toutes les données du film
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    displayAlert(result.message, result.status); // Utiliser le statut retourné par le backend (success/info)
+                } else {
+                    displayAlert(result.message, 'danger');
+                }
+            } catch (error) {
+                console.error('Erreur lors de l\'appel à add_to_list:', error);
+                displayAlert('Une erreur réseau est survenue lors de l\'ajout à la liste.', 'danger');
+            }
+        });
+
+
+        // Fonction utilitaire pour afficher les alertes dynamiques
+        function displayAlert(message, category) {
+            const dynamicAlertContainer = document.getElementById('dynamic-alert-container');
+            if (dynamicAlertContainer) {
                 const alertDiv = document.createElement('div');
                 alertDiv.className = `alert alert-${category} alert-dismissible fade show`;
                 alertDiv.setAttribute('role', 'alert');
@@ -651,7 +727,19 @@
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 `;
                 dynamicAlertContainer.appendChild(alertDiv);
+                // Optionnel: Supprimer l'alerte après quelques secondes
+                setTimeout(() => {
+                    alertDiv.remove();
+                }, 5000);
             }
+        }
+
+        // Exemple de gestion des messages flash de Flask (si vous en avez)
+        const urlParams = new URLSearchParams(window.location.search);
+        const message = urlParams.get('message');
+        const category = urlParams.get('category');
+        if (message && category) {
+            displayAlert(message, category);
         }
     });
 </script>
