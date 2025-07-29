@@ -14,7 +14,7 @@ def home():
 def register():
     if request.method == 'POST':
         username = request.form['username']
-        email = request.form['email']
+        email = request.form['email'] 
         password = request.form['password']
         
         hashed_password = generate_password_hash(password) 
@@ -29,7 +29,7 @@ def register():
 
             if existing_user:
                 print(f"DEBUG (Register): Utilisateur existant trouvé: {existing_user['username']} / {existing_user['email']}")
-                flash('Vous avez déjà un compte.', 'warning') 
+                flash('Un utilisateur avec ce nom d\'utilisateur ou cet email existe déjà.', 'warning') 
             else:
                 print("DEBUG (Register): Aucun utilisateur existant trouvé, tentative d'insertion...")
                 cursor.execute('INSERT INTO users (username, email, password) VALUES (?, ?, ?)', (username, email, hashed_password))
@@ -67,7 +67,7 @@ def register():
                 return redirect(url_for('api_routes.dashboard'))
         except sqlite3.IntegrityError as e:
             print(f"DEBUG (Register Error): sqlite3.IntegrityError: {e}")
-            flash('Un utilisateur avec ce nom d\'utilisateur ou cet email existe déjà.', 'warning') # Message cohérent
+            flash('Un utilisateur avec ce nom d\'utilisateur ou cet email existe déjà.', 'warning') 
         except Exception as e:
             print(f"DEBUG (Register Error): Erreur inattendue: {e}")
             flash(f'Une erreur inattendue est survenue lors de l\'inscription: {e}', 'danger')
@@ -102,8 +102,8 @@ def login():
             if check_password_hash(user['password'], password): 
                 print("DEBUG (Login): Mot de passe correspond!")
                 session['user_id'] = user['id'] # Stocke l'ID de l'utilisateur dans la session
-                session['email'] = email
-                session['username'] = username 
+                session['email'] = user['email'] 
+                session['username'] = user['username'] 
                 print(f"DEBUG (Login): Session['user_id'] set to: {session['user_id']}")
                 print(f"DEBUG (Login): Session['email'] set to: {session['email']}")
                 print(f"DEBUG (Login): Session['username'] set to: {session['username']}")
@@ -123,21 +123,21 @@ def dashboard():
     print("DEBUG (Dashboard): Accès à la fonction dashboard.")
     print(f"DEBUG (Dashboard): Contenu de la session: {dict(session)}")
 
-    if 'user_id' in session: # Vérifie l'ID de l'utilisateur dans la session
+    if 'user_id' in session: 
         print(f"DEBUG (Dashboard): 'user_id' trouvé dans la session: {session['user_id']}")
         print(f"DEBUG (Dashboard): 'email' trouvé dans la session: {session['email']}")
         print(f"DEBUG (Dashboard): 'username' dans la session: {session.get('username', 'Non défini')}")
         return render_template('dashboard.html', 
                                user_email=session['email'], 
                                username=session.get('username', 'Utilisateur'),
-                               user_id=session['user_id']) # Passe l'ID de l'utilisateur au template
+                               user_id=session['user_id']) 
     else:
         print("DEBUG (Dashboard): 'user_id' non trouvé dans la session. Redirection vers la page de connexion.")
         return redirect(url_for('api_routes.login'))
 
 @api_routes.route('/logout')
 def logout():
-    session.pop('user_id', None) # Supprime l'ID de l'utilisateur de la session
+    session.pop('user_id', None) 
     session.pop('email', None) 
     session.pop('username', None) 
     flash('Déconnecté avec succès', 'info')
@@ -156,6 +156,7 @@ def add_to_list():
     film_description = data.get('description')
     film_rating = data.get('rating')
     film_image = data.get('image')
+    film_video_url = data.get('video_url') 
 
     if not film_title:
         return jsonify({'status': 'error', 'message': 'Titre du film manquant.'}), 400
@@ -164,7 +165,6 @@ def add_to_list():
     cursor = conn.cursor()
 
     try:
-        # Vérifie si le film existe déjà dans la table 'films'
         cursor.execute('SELECT id FROM films WHERE title = ?', (film_title,))
         film = cursor.fetchone()
         film_id = None
@@ -172,17 +172,21 @@ def add_to_list():
         if film:
             film_id = film['id']
             print(f"DEBUG (AddToList): Film '{film_title}' déjà existant avec ID: {film_id}")
-        else:
-            # Insère le film dans la table 'films'
             cursor.execute(
-                'INSERT INTO films (title, genre, description, rating, image_url) VALUES (?, ?, ?, ?, ?)',
-                (film_title, film_genre, film_description, film_rating, film_image)
+                'UPDATE films SET genre = ?, description = ?, rating = ?, image_url = ?, video_url = ? WHERE id = ?',
+                (film_genre, film_description, film_rating, film_image, film_video_url, film_id)
+            )
+            conn.commit()
+            print(f"DEBUG (AddToList): Film '{film_title}' mis à jour.")
+        else:
+            cursor.execute(
+                'INSERT INTO films (title, genre, description, rating, image_url, video_url) VALUES (?, ?, ?, ?, ?, ?)',
+                (film_title, film_genre, film_description, film_rating, film_image, film_video_url)
             )
             conn.commit()
             film_id = cursor.lastrowid
             print(f"DEBUG (AddToList): Film '{film_title}' inséré avec ID: {film_id}")
 
-        # Vérifie si le film est déjà dans la liste de l'utilisateur
         cursor.execute('SELECT id FROM user_films WHERE user_id = ? AND film_id = ?', (user_id, film_id))
         user_film_entry = cursor.fetchone()
 
@@ -190,7 +194,6 @@ def add_to_list():
             print(f"DEBUG (AddToList): Film '{film_title}' déjà dans la liste de l'utilisateur {user_id}.")
             return jsonify({'status': 'info', 'message': 'Ce film est déjà dans votre liste !'}), 200
         else:
-            # Ajoute le film à la liste de l'utilisateur
             cursor.execute(
                 'INSERT INTO user_films (user_id, film_id) VALUES (?, ?)',
                 (user_id, film_id)
@@ -201,7 +204,7 @@ def add_to_list():
 
     except sqlite3.Error as e:
         print(f"DEBUG (AddToList Error): Erreur SQLite: {e}")
-        conn.rollback() # Annule la transaction en cas d'erreur
+        conn.rollback() 
         return jsonify({'status': 'error', 'message': f'Erreur de base de données: {e}'}), 500
     except Exception as e:
         print(f"DEBUG (AddToList Error): Erreur inattendue: {e}")
@@ -222,12 +225,55 @@ def watch_film():
     if not film_title:
         return jsonify({'status': 'error', 'message': 'Titre du film manquant pour la lecture.'}), 400
 
-    # Ici, vous implémenteriez la logique réelle pour "regarder" le film.
-    # Cela pourrait inclure :
-    # - Enregistrer l'activité de visionnage dans la base de données.
-    # - Rediriger l'utilisateur vers une page de lecteur vidéo avec l'URL du film.
-    # - Déclencher un service de streaming, etc.
+    conn = get_db_connection()
+    cursor = conn.cursor()
 
-    # Pour l'instant, nous allons simplement enregistrer un message et renvoyer un succès.
-    print(f"DEBUG (WatchFilm): L'utilisateur {user_id} est en train de 'regarder' le film : '{film_title}'")
-    return jsonify({'status': 'success', 'message': f'Lancement du film "{film_title}"... (Fonctionnalité en développement)'}), 200
+    try:
+        cursor.execute('SELECT id, video_url FROM films WHERE title = ?', (film_title,))
+        film = cursor.fetchone()
+
+        if not film:
+            print(f"DEBUG (WatchFilm): Film '{film_title}' non trouvé dans la base de données.")
+            return jsonify({'status': 'error', 'message': 'Film non trouvé.'}), 404
+
+        film_id = film['id']
+        video_url = film['video_url']
+
+        if not video_url:
+            print(f"DEBUG (WatchFilm): URL vidéo manquante pour le film '{film_title}'.")
+            return jsonify({'status': 'error', 'message': 'URL vidéo non disponible pour ce film.'}), 404
+
+        cursor.execute('SELECT watched FROM user_films WHERE user_id = ? AND film_id = ?', (user_id, film_id))
+        user_film_entry = cursor.fetchone()
+
+        if user_film_entry:
+            if not user_film_entry['watched']: 
+                cursor.execute(
+                    'UPDATE user_films SET watched = 1 WHERE user_id = ? AND film_id = ?',
+                    (user_id, film_id)
+                )
+                conn.commit()
+                print(f"DEBUG (WatchFilm): Film '{film_title}' marqué comme vu pour l'utilisateur {user_id}.")
+            else:
+                print(f"DEBUG (WatchFilm): Film '{film_title}' déjà marqué comme vu pour l'utilisateur {user_id}.")
+        else:
+            cursor.execute(
+                'INSERT INTO user_films (user_id, film_id, watched) VALUES (?, ?, 1)',
+                (user_id, film_id)
+            )
+            conn.commit()
+            print(f"DEBUG (WatchFilm): Film '{film_title}' ajouté à la liste et marqué comme vu pour l'utilisateur {user_id}.")
+
+        print(f"DEBUG (WatchFilm): L'utilisateur {user_id} est en train de 'regarder' le film : '{film_title}', URL: {video_url}")
+        return jsonify({'status': 'success', 'message': f'Lancement du film "{film_title}"...', 'video_url': video_url}), 200
+
+    except sqlite3.Error as e:
+        print(f"DEBUG (WatchFilm Error): Erreur SQLite: {e}")
+        conn.rollback()
+        return jsonify({'status': 'error', 'message': f'Erreur de base de données: {e}'}), 500
+    except Exception as e:
+        print(f"DEBUG (WatchFilm Error): Erreur inattendue: {e}")
+        return jsonify({'status': 'error', 'message': f'Une erreur inattendue est survenue: {e}'}), 500
+    finally:
+        if conn:
+            conn.close()

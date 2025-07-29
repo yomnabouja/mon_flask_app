@@ -20,7 +20,7 @@
     <!-- Conteneur pour les messages dynamiques (JavaScript) -->
     <div id="dynamic-alert-container" class="mt-3"></div>
 
-    <!-- Nouvelle Section : Film du Jour -->
+    <!-- Nouvelle Section : Film du Jour (maintenant unique) -->
     <h2 class="text-center text-primary mb-4">Film du Jour 🎬</h2>
     <div class="card mb-5 shadow-lg border-0">
         <div class="row g-0">
@@ -42,41 +42,8 @@
                                 data-genre="Animation, Fantastique, Aventure"
                                 data-description="Chihiro, une jeune fille de 10 ans, déménage avec ses parents. Sur la route, ils s'arrêtent devant un mystérieux tunnel qui les mène vers un monde peuplé de dieux et d'esprits. Un chef-d'œuvre de l'animation japonaise."
                                 data-rating="9.0"
-                                data-image="{{ url_for('static', filename='css/images/voyage1.jpg') }}">
-                            Voir les détails <i class="bi bi-arrow-right"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Conteneur pour les messages dynamiques (JavaScript) -->
-    <div id="dynamic-alert-container" class="mt-3"></div>
-
-    <!-- Nouvelle Section : Film du Jour -->
-    <h2 class="text-center text-primary mb-4">Film du Jour 🎬</h2>
-    <div class="card mb-5 shadow-lg border-0">
-        <div class="row g-0">
-            <div class="col-md-4">
-                <img src="{{ url_for('static', filename='css/images/voyage1.jpg') }}" class="img-fluid rounded-start h-100 object-fit-cover" alt="Affiche du Film du Jour">
-            </div>
-            <div class="col-md-8">
-                <div class="card-body p-4">
-                    <h3 class="card-title text-dark fw-bold">Le Voyage de Chihiro</h3>
-                    <p class="card-text text-muted">Genre: Animation, Fantastique, Aventure</p>
-                    <p class="card-text">
-                        Chihiro, une jeune fille de 10 ans, déménage avec ses parents. Sur la route, ils s'arrêtent devant un mystérieux tunnel qui les mène vers un monde peuplé de dieux et d'esprits. Un chef-d'œuvre de l'animation japonaise.
-                    </p>
-                    <div class="d-flex justify-content-between align-items-center mt-3">
-                        <span class="badge bg-warning text-dark"><i class="bi bi-star-fill"></i> 9.0/10</span>
-                        <button type="button" class="btn btn-primary view-details-btn"
-                                data-bs-toggle="modal" data-bs-target="#filmDetailsModal"
-                                data-title="Le Voyage de Chihiro"
-                                data-genre="Animation, Fantastique, Aventure"
-                                data-description="Chihiro, une jeune fille de 10 ans, déménage avec ses parents. Sur la route, ils s'arrêtent devant un mystérieux tunnel qui les mène vers un monde peuplé de dieux et d'esprits. Un chef-d'œuvre de l'animation japonaise."
-                                data-rating="9.0"
-                                data-image="{{ url_for('static', filename='css/images/voyage1.jpg') }}">
+                                data-image="{{ url_for('static', filename='css/images/voyage1.jpg') }}"
+                                data-video-url="https://www.youtube.com/embed/ByXuk9Qqxkk"> {# Exemple d'URL vidéo #}
                             Voir les détails <i class="bi bi-arrow-right"></i>
                         </button>
                     </div>
@@ -113,7 +80,8 @@
                              data-genre="Action, Aventure"
                              data-description="Un film d'action palpitant avec des scènes spectaculaires et une histoire captivante."
                              data-rating="8.5"
-                             data-image="{{ url_for('static', filename='css/images/film1.jpg') }}">
+                             data-image="{{ url_for('static', filename='css/images/film1.jpg') }}"
+                             data-video-url="https://www.youtube.com/embed/dQw4w9WgXcQ"> {# Exemple d'URL vidéo #}
                             <img src="{{ url_for('static', filename='css/images/film1.jpg') }}" class="card-img-top rounded-top" alt="Affiche du film">
                             <div class="card-body p-2 text-center">
                                 <h6 class="card-title text-dark mb-0">Film Populaire 1</h6>
@@ -127,7 +95,8 @@
                              data-genre="Drame, Romance"
                              data-description="Une histoire d'amour émouvante et déchirante qui vous tiendra en haleine du début à la fin."
                              data-rating="7.9"
-                             data-image="{{ url_for('static', filename='css/images/film2.jpg') }}">
+                             data-image="{{ url_for('static', filename='css/images/film2.jpg') }}"
+                             data-video-url="https://www.youtube.com/embed/dQw4w9WgXcQ"> {# Exemple d'URL vidéo #}
                             <img src="{{ url_for('static', filename='css/images/film2.jpg') }}" class="card-img-top rounded-top" alt="Affiche du film">
                             <div class="card-body p-2 text-center">
                                 <h6 class="card-title text-dark mb-0">Film Populaire 2</h6>
@@ -141,7 +110,8 @@
                              data-genre="Science-fiction, Thriller"
                              data-description="Un thriller de science-fiction qui explore les limites de la technologie et de l'humanité."
                              data-rating="8.8"
-                             data-image="{{ url_for('static', filename='css/images/film3.jpg') }}">
+                             data-image="{{ url_for('static', filename='css/images/film3.jpg') }}"
+                             data-video-url="https://www.youtube.com/embed/dQw4w9WgXcQ"> {# Exemple d'URL vidéo #}
                             <img src="{{ url_for('static', filename='css/images/film3.jpg') }}" class="card-img-top rounded-top" alt="Affiche du film">
                             <div class="card-body p-2 text-center">
                                 <h6 class="card-title text-dark mb-0">Film Populaire 3</h6>
@@ -155,7 +125,8 @@
                              data-genre="Comédie, Famille"
                              data-description="Une comédie légère et amusante parfaite pour toute la famille, pleine de rires et de moments tendres."
                              data-rating="7.2"
-                             data-image="{{ url_for('static', filename='css/images/film4.jpg') }}">
+                             data-image="{{ url_for('static', filename='css/images/film4.jpg') }}"
+                             data-video-url="https://www.youtube.com/embed/dQw4w9WgXcQ"> {# Exemple d'URL vidéo #}
                             <img src="{{ url_for('static', filename='css/images/film4.jpg') }}" class="card-img-top rounded-top" alt="Affiche du film">
                             <div class="card-body p-2 text-center">
                                 <h6 class="card-title text-dark mb-0">Film Populaire 4</h6>
@@ -169,7 +140,8 @@
                              data-genre="Action, Thriller"
                              data-description="Un film d'action intense avec des rebondissements inattendus et une performance d'acteur exceptionnelle."
                              data-rating="8.1"
-                             data-image="{{ url_for('static', filename='css/images/film5.jpg') }}">
+                             data-image="{{ url_for('static', filename='css/images/film5.jpg') }}"
+                             data-video-url="https://www.youtube.com/embed/dQw4w9WgXcQ"> {# Exemple d'URL vidéo #}
                             <img src="{{ url_for('static', filename='css/images/film5.jpg') }}" class="card-img-top rounded-top" alt="Affiche du film">
                             <div class="card-body p-2 text-center">
                                 <h6 class="card-title text-dark mb-0">Film Populaire 5</h6>
@@ -188,7 +160,8 @@
                              data-genre="Animation, Aventure"
                              data-description="Une aventure animée pleine de magie et de personnages attachants, pour petits et grands."
                              data-rating="8.3"
-                             data-image="{{ url_for('static', filename='css/images/vu film1.jpg') }}">
+                             data-image="{{ url_for('static', filename='css/images/vu film1.jpg') }}"
+                             data-video-url="https://www.youtube.com/embed/dQw4w9WgXcQ"> {# Exemple d'URL vidéo #}
                             <img src="{{ url_for('static', filename='css/images/vu film1.jpg') }}" class="card-img-top rounded-top" alt="Affiche du film">
                             <div class="card-body p-2 text-center">
                                 <h6 class="card-title text-dark mb-0">Film Populaire 6</h6>
@@ -202,7 +175,8 @@
                              data-genre="Fantastique, Drame"
                              data-description="Un drame fantastique qui explore des thèmes profonds avec une touche de surnaturel."
                              data-rating="7.5"
-                             data-image="{{ url_for('static', filename='css/images/vu film2.jpg') }}">
+                             data-image="{{ url_for('static', filename='css/images/vu film2.jpg') }}"
+                             data-video-url="https://www.youtube.com/embed/dQw4w9WgXcQ"> {# Exemple d'URL vidéo #}
                             <img src="{{ url_for('static', filename='css/images/vu film2.jpg') }}" class="card-img-top rounded-top" alt="Affiche du film">
                             <div class="card-body p-2 text-center">
                                 <h6 class="card-title text-dark mb-0">Film Populaire 7</h6>
@@ -216,7 +190,8 @@
                              data-genre="Comédie, Musical"
                              data-description="Une comédie musicale entraînante avec des numéros de danse et des chansons mémorables."
                              data-rating="7.8"
-                             data-image="{{ url_for('static', filename='css/images/vu film3.jpg') }}">
+                             data-image="{{ url_for('static', filename='css/images/vu film3.jpg') }}"
+                             data-video-url="https://www.youtube.com/embed/dQw4w9WgXcQ"> {# Exemple d'URL vidéo #}
                             <img src="{{ url_for('static', filename='css/images/vu film3.jpg') }}" class="card-img-top rounded-top" alt="Affiche du film">
                             <div class="card-body p-2 text-center">
                                 <h6 class="card-title text-dark mb-0">Film Populaire 8</h6>
@@ -230,7 +205,8 @@
                              data-genre="Horreur, Mystère"
                              data-description="Un film d'horreur psychologique qui vous tiendra en haleine jusqu'à la dernière minute."
                              data-rating="6.9"
-                             data-image="{{ url_for('static', filename='css/images/tendance1.jpg') }}">
+                             data-image="{{ url_for('static', filename='css/images/tendance1.jpg') }}"
+                             data-video-url="https://www.youtube.com/embed/dQw4w9WgXcQ"> {# Exemple d'URL vidéo #}
                             <img src="{{ url_for('static', filename='css/images/tendance1.jpg') }}" class="card-img-top rounded-top" alt="Affiche du film">
                             <div class="card-body p-2 text-center">
                                 <h6 class="card-title text-dark mb-0">Film Populaire 9</h6>
@@ -244,7 +220,8 @@
                              data-genre="Action, Aventure"
                              data-description="Une aventure épique remplie d'action, de trésors cachés et de paysages à couper le souffle."
                              data-rating="8.0"
-                             data-image="{{ url_for('static', filename='css/images/tendance2.jpg') }}">
+                             data-image="{{ url_for('static', filename='css/images/tendance2.jpg') }}"
+                             data-video-url="https://www.youtube.com/embed/dQw4w9WgXcQ"> {# Exemple d'URL vidéo #}
                             <img src="{{ url_for('static', filename='css/images/tendance2.jpg') }}" class="card-img-top rounded-top" alt="Affiche du film">
                             <div class="card-body p-2 text-center">
                                 <h6 class="card-title text-dark mb-0">Film Populaire 10</h6>
@@ -274,7 +251,8 @@
                  data-genre="Action, Aventure"
                  data-description="Une brève description du film et pourquoi il pourrait vous plaire."
                  data-rating="7.0"
-                 data-image="{{ url_for('static', filename='css/images/film1.jpg') }}">
+                 data-image="{{ url_for('static', filename='css/images/film1.jpg') }}"
+                 data-video-url="https://www.youtube.com/embed/dQw4w9WgXcQ"> {# Exemple d'URL vidéo #}
                 <img src="{{ url_for('static', filename='css/images/film1.jpg') }}" class="card-img-top rounded-top" alt="Affiche du film">
                 <div class="card-body">
                     <h5 class="card-title text-dark">Titre du Film Recommandé 1</h5>
@@ -286,7 +264,8 @@
                             data-genre="Action, Aventure"
                             data-description="Une brève description du film et pourquoi il pourrait vous plaire."
                             data-rating="7.0"
-                            data-image="{{ url_for('static', filename='css/images/film1.jpg') }}">
+                            data-image="{{ url_for('static', filename='css/images/film1.jpg') }}"
+                            data-video-url="https://www.youtube.com/embed/dQw4w9WgXcQ"> {# Exemple d'URL vidéo #}
                         Voir les détails
                     </button>
                 </div>
@@ -299,7 +278,8 @@
                  data-genre="Drame, Science-fiction"
                  data-description="Une autre description intéressante pour ce film recommandé."
                  data-rating="7.5"
-                 data-image="{{ url_for('static', filename='css/images/film2.jpg') }}">
+                 data-image="{{ url_for('static', filename='css/images/film2.jpg') }}"
+                 data-video-url="https://www.youtube.com/embed/dQw4w9WgXcQ"> {# Exemple d'URL vidéo #}
                 <img src="{{ url_for('static', filename='css/images/film2.jpg') }}" class="card-img-top rounded-top" alt="Affiche du film">
                 <div class="card-body">
                     <h5 class="card-title text-dark">Titre du Film Recommandé 2</h5>
@@ -311,7 +291,8 @@
                             data-genre="Drame, Science-fiction"
                             data-description="Une autre description intéressante pour ce film recommandé."
                             data-rating="7.5"
-                            data-image="{{ url_for('static', filename='css/images/film2.jpg') }}">
+                            data-image="{{ url_for('static', filename='css/images/film2.jpg') }}"
+                            data-video-url="https://www.youtube.com/embed/dQw4w9WgXcQ"> {# Exemple d'URL vidéo #}
                         Voir les détails
                     </button>
                 </div>
@@ -324,7 +305,8 @@
                  data-genre="Comédie, Romance"
                  data-description="Découvrez pourquoi ce film est un excellent choix pour vous."
                  data-rating="8.0"
-                 data-image="{{ url_for('static', filename='css/images/film3.jpg') }}">
+                 data-image="{{ url_for('static', filename='css/images/film3.jpg') }}"
+                 data-video-url="https://www.youtube.com/embed/dQw4w9WgXcQ"> {# Exemple d'URL vidéo #}
                 <img src="{{ url_for('static', filename='css/images/film3.jpg') }}" class="card-img-top rounded-top" alt="Affiche du film">
                 <div class="card-body">
                     <h5 class="card-title text-dark">Titre du Film Recommandé 3</h5>
@@ -336,7 +318,8 @@
                             data-genre="Comédie, Romance"
                             data-description="Découvrez pourquoi ce film est un excellent choix pour vous."
                             data-rating="8.0"
-                            data-image="{{ url_for('static', filename='css/images/film3.jpg') }}">
+                            data-image="{{ url_for('static', filename='css/images/film3.jpg') }}"
+                            data-video-url="https://www.youtube.com/embed/dQw4w9WgXcQ"> {# Exemple d'URL vidéo #}
                         Voir les détails
                     </button>
                 </div>
@@ -349,7 +332,8 @@
                  data-genre="Thriller, Mystère"
                  data-description="Un autre film pour compléter la ligne."
                  data-rating="7.3"
-                 data-image="{{ url_for('static', filename='css/images/film4.jpg') }}">
+                 data-image="{{ url_for('static', filename='css/images/film4.jpg') }}"
+                 data-video-url="https://www.youtube.com/embed/dQw4w9WgXcQ"> {# Exemple d'URL vidéo #}
                 <img src="{{ url_for('static', filename='css/images/film4.jpg') }}" class="card-img-top rounded-top" alt="Affiche du film">
                 <div class="card-body">
                     <h5 class="card-title text-dark">Titre du Film Recommandé 4</h5>
@@ -361,7 +345,8 @@
                             data-genre="Thriller, Mystère"
                             data-description="Un autre film pour compléter la ligne."
                             data-rating="7.3"
-                            data-image="{{ url_for('static', filename='css/images/film4.jpg') }}">
+                            data-image="{{ url_for('static', filename='css/images/film4.jpg') }}"
+                            data-video-url="https://www.youtube.com/embed/dQw4w9WgXcQ"> {# Exemple d'URL vidéo #}
                         Voir les détails
                     </button>
                 </div>
@@ -505,7 +490,8 @@
                  data-genre="Animation, Aventure"
                  data-description="Une suite captivante avec de nouveaux défis et des personnages inoubliables."
                  data-rating="7.8"
-                 data-image="{{ url_for('static', filename='css/images/vu film1.jpg') }}">
+                 data-image="{{ url_for('static', filename='css/images/vu film1.jpg') }}"
+                 data-video-url="https://www.youtube.com/embed/dQw4w9WgXcQ"> {# Exemple d'URL vidéo #}
                 <img src="{{ url_for('static', filename='css/images/vu film1.jpg') }}" class="card-img-top rounded-top" alt="Affiche du film vu">
                 <div class="card-body p-2 text-center">
                     <h6 class="card-title text-dark mb-0">Viaiana 2</h6>
@@ -519,7 +505,8 @@
                  data-genre="Animation, Action, Fantastique"
                  data-description="Les légendaires Chevaliers du Zodiaque reviennent pour protéger la Terre des forces du mal."
                  data-rating="8.2"
-                 data-image="{{ url_for('static', filename='css/images/vu film2.jpg') }}">
+                 data-image="{{ url_for('static', filename='css/images/vu film2.jpg') }}"
+                 data-video-url="https://www.youtube.com/embed/dQw4w9WgXcQ"> {# Exemple d'URL vidéo #}
                 <img src="{{ url_for('static', filename='css/images/vu film2.jpg') }}" class="card-img-top rounded-top" alt="Affiche du film vu">
                 <div class="card-body p-2 text-center">
                     <h6 class="card-title text-dark mb-0">Les Chevaliers De Zodiaque </h6>
@@ -533,7 +520,8 @@
                  data-genre="Animation, Comédie"
                  data-description="Les aventures hilarantes d'un petit piaf qui découvre le monde."
                  data-rating="7.0"
-                 data-image="{{ url_for('static', filename='css/images/vu film3.jpg') }}">
+                 data-image="{{ url_for('static', filename='css/images/vu film3.jpg') }}"
+                 data-video-url="https://www.youtube.com/embed/dQw4w9WgXcQ"> {# Exemple d'URL vidéo #}
                 <img src="{{ url_for('static', filename='css/images/vu film3.jpg') }}" class="card-img-top rounded-top" alt="Affiche du film vu">
                 <div class="card-body p-2 text-center">
                     <h6 class="card-title text-dark mb-0">Petit Piaf</h6>
@@ -547,7 +535,8 @@
                  data-genre="Comédie, Fantastique"
                  data-description="Barbie quitte Barbieland pour le monde réel dans cette comédie colorée et pleine de surprises."
                  data-rating="7.5"
-                 data-image="{{ url_for('static', filename='css/images/film3.jpg') }}">
+                 data-image="{{ url_for('static', filename='css/images/film3.jpg') }}"
+                 data-video-url="https://www.youtube.com/embed/dQw4w9WgXcQ"> {# Exemple d'URL vidéo #}
                 <img src="{{ url_for('static', filename='css/images/film3.jpg') }}" class="card-img-top rounded-top" alt="Affiche du film vu">
                 <div class="card-body p-2 text-center">
                     <h6 class="card-title text-dark mb-0">Barbie </h6>
@@ -561,7 +550,8 @@
                  data-genre="Documentaire"
                  data-description="Explorez les merveilles et les mystères des océans du monde."
                  data-rating="8.9"
-                 data-image="{{ url_for('static', filename='css/images/vu film5.jpg') }}">
+                 data-image="{{ url_for('static', filename='css/images/vu film5.jpg') }}"
+                 data-video-url="https://www.youtube.com/embed/dQw4w9WgXcQ"> {# Exemple d'URL vidéo #}
                 <img src="{{ url_for('static', filename='css/images/vu film5.jpg') }}" class="card-img-top rounded-top" alt="Affiche du film vu">
                 <div class="card-body p-2 text-center">
                     <h6 class="card-title text-dark mb-0">International Ocean </h6>
@@ -580,7 +570,8 @@
                  data-genre="Drame, Thriller"
                  data-description="Un thriller sombre qui explore les profondeurs de l'âme humaine et ses péchés."
                  data-rating="7.1"
-                 data-image="{{ url_for('static', filename='css/images/tendance1.jpg') }}">
+                 data-image="{{ url_for('static', filename='css/images/tendance1.jpg') }}"
+                 data-video-url="https://www.youtube.com/embed/dQw4w9WgXcQ"> {# Exemple d'URL vidéo #}
                 <img src="{{ url_for('static', filename='css/images/tendance1.jpg') }}" class="card-img-top rounded-top" alt="Affiche du film tendance">
                 <div class="card-body p-2 text-center">
                     <h6 class="card-title text-dark mb-0">Sinners</h6>
@@ -594,7 +585,8 @@
                  data-genre="Comédie"
                  data-description="Une journée ordinaire qui tourne au chaos dans cette comédie hilarante."
                  data-rating="6.5"
-                 data-image="{{ url_for('static', filename='css/images/tendance2.jpg') }}">
+                 data-image="{{ url_for('static', filename='css/images/tendance2.jpg') }}"
+                 data-video-url="https://www.youtube.com/embed/dQw4w9WgXcQ"> {# Exemple d'URL vidéo #}
                 <img src="{{ url_for('static', filename='css/images/tendance2.jpg') }}" class="card-img-top rounded-top" alt="Affiche du film tendance">
                 <div class="card-body p-2 text-center">
                     <h6 class="card-title text-dark mb-0">One Of Them Days</h6>
@@ -608,7 +600,8 @@
                  data-genre="Comédie, Action"
                  data-description="Deux policiers que tout oppose doivent faire équipe dans cette comédie d'action."
                  data-rating="7.0"
-                 data-image="{{ url_for('static', filename='css/images/tendance3.jpg') }}">
+                 data-image="{{ url_for('static', filename='css/images/tendance3.jpg') }}"
+                 data-video-url="https://www.youtube.com/embed/dQw4w9WgXcQ"> {# Exemple d'URL vidéo #}
                 <img src="{{ url_for('static', filename='css/images/tendance3.jpg') }}" class="card-img-top rounded-top" alt="Affiche du film tendance">
                 <div class="card-body p-2 text-center">
                     <h6 class="card-title text-dark mb-0">Les Condés</h6>
@@ -622,7 +615,8 @@
                  data-genre="Drame, Thriller"
                  data-description="Une femme prise dans un réseau de mensonges doit se battre pour la vérité."
                  data-rating="7.4"
-                 data-image="{{ url_for('static', filename='css/images/tendance4.jpg') }}">
+                 data-image="{{ url_for('static', filename='css/images/tendance4.jpg') }}"
+                 data-video-url="https://www.youtube.com/embed/dQw4w9WgXcQ"> {# Exemple d'URL vidéo #}
                 <img src="{{ url_for('static', filename='css/images/tendance4.jpg') }}" class="card-img-top rounded-top" alt="Affiche du film tendance">
                 <div class="card-body p-2 text-center">
                     <h6 class="card-title text-dark mb-0">Menteuse</h6>
@@ -636,7 +630,8 @@
                  data-genre="Action, Super-héros"
                  data-description="Le premier Avenger se bat pour la liberté dans cette aventure épique de super-héros."
                  data-rating="8.6"
-                 data-image="{{ url_for('static', filename='css/images/tendance5.jpg') }}">
+                 data-image="{{ url_for('static', filename='css/images/tendance5.jpg') }}"
+                 data-video-url="https://www.youtube.com/embed/dQw4w9WgXcQ"> {# Exemple d'URL vidéo #}
                 <img src="{{ url_for('static', filename='css/images/tendance5.jpg') }}" class="card-img-top rounded-top" alt="Affiche du film tendance">
                 <div class="card-body p-2 text-center">
                     <h6 class="card-title text-dark mb-0">Captian America </h6>
@@ -717,6 +712,7 @@
             const description = button.getAttribute('data-description');
             const rating = button.getAttribute('data-rating');
             const image = button.getAttribute('data-image');
+            const videoUrl = button.getAttribute('data-video-url'); 
 
             // Mettre à jour le contenu de la modale
             const modalTitle = filmDetailsModal.querySelector('#modalFilmTitle');
@@ -730,35 +726,42 @@
             modalTitle.textContent = title;
             modalGenre.textContent = genre;
             modalDescription.textContent = description;
-            modalRating.innerHTML = `<i class="bi bi-star-fill"></i> ${rating}`; // Ajoute l'icône étoile
+            modalRating.innerHTML = `<i class="bi bi-star-fill"></i> ${rating}`; 
             modalImage.src = image;
 
             // Stocker les données du film sur les boutons pour un accès facile dans les gestionnaires de clic
             playFilmBtn.dataset.title = title;
+            playFilmBtn.dataset.videoUrl = videoUrl; 
+
             addToListBtn.dataset.title = title;
             addToListBtn.dataset.genre = genre;
             addToListBtn.dataset.description = description;
             addToListBtn.dataset.rating = rating;
             addToListBtn.dataset.image = image;
+            addToListBtn.dataset.videoUrl = videoUrl; 
         });
 
         // Gestionnaire d'événements pour le bouton "Regarder"
         document.getElementById('playFilmBtn').addEventListener('click', async function() {
             const filmTitle = this.dataset.title;
-            // Maintenant, nous faisons un appel AJAX au serveur
+            const videoUrl = this.dataset.videoUrl; 
+
             try {
                 const response = await fetch('{{ url_for('api_routes.watch_film') }}', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({ title: filmTitle }),
+                    body: JSON.stringify({ title: filmTitle }), 
                 });
 
                 const result = await response.json();
 
                 if (response.ok) {
                     showAlert(result.message, result.status);
+                    if (result.video_url) {
+                        window.open(result.video_url, '_blank'); 
+                    }
                 } else {
                     showAlert(result.message || 'Erreur lors du lancement du film.', 'danger');
                 }
@@ -766,7 +769,7 @@
                 console.error('Erreur:', error);
                 showAlert('Une erreur réseau est survenue lors du lancement du film. Veuillez réessayer.', 'danger');
             } finally {
-                $('#filmDetailsModal').modal('hide'); // Masquer la modale après l'action
+                $('#filmDetailsModal').modal('hide'); 
             }
         });
 
@@ -776,8 +779,9 @@
                 title: this.dataset.title,
                 genre: this.dataset.genre,
                 description: this.dataset.description,
-                rating: parseFloat(this.dataset.rating), // Convertir l'évaluation en flottant
-                image: this.dataset.image
+                rating: parseFloat(this.dataset.rating), 
+                image: this.dataset.image,
+                video_url: this.dataset.videoUrl 
             };
 
             try {
@@ -800,7 +804,7 @@
                 console.error('Erreur:', error);
                 showAlert('Une erreur réseau est survenue. Veuillez réessayer.', 'danger');
             } finally {
-                $('#filmDetailsModal').modal('hide'); // Masquer la modale après l'action
+                $('#filmDetailsModal').modal('hide'); 
             }
         });
     });
