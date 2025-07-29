@@ -745,6 +745,9 @@
         document.getElementById('playFilmBtn').addEventListener('click', async function() {
             const filmTitle = this.dataset.title;
             const videoUrl = this.dataset.videoUrl; 
+            console.log('DEBUG Frontend: Bouton Regarder cliqué.');
+            console.log('DEBUG Frontend: Titre du film:', filmTitle);
+            console.log('DEBUG Frontend: URL vidéo à envoyer:', videoUrl);
 
             try {
                 const response = await fetch('{{ url_for('api_routes.watch_film') }}', {
@@ -756,19 +759,39 @@
                 });
 
                 const result = await response.json();
+                console.log('DEBUG Frontend: Réponse du backend pour watch_film:', result);
 
                 if (response.ok) {
                     showAlert(result.message, result.status);
                     if (result.video_url) {
-                        window.open(result.video_url, '_blank'); 
+                        console.log('DEBUG Frontend: URL vidéo reçue du backend:', result.video_url);
+                        // Tente d'ouvrir le nouvel onglet
+                        const newWindow = window.open(result.video_url, '_blank'); 
+                        if (newWindow) {
+                            console.log('DEBUG Frontend: Nouvelle fenêtre ouverte avec succès.');
+                            // Optionnel: Donner un court délai avant de fermer la modale
+                            // pour éviter que le bloqueur de pop-up ne s'active si la modale se ferme trop vite.
+                            setTimeout(() => {
+                                $('#filmDetailsModal').modal('hide'); 
+                            }, 500); // Ferme la modale après 0.5 seconde
+                        } else {
+                            showAlert('Le nouvel onglet a été bloqué par votre navigateur. Veuillez désactiver le bloqueur de pop-up pour ce site.', 'warning');
+                            console.warn('DEBUG Frontend: Le nouvel onglet a été bloqué par le navigateur.');
+                            $('#filmDetailsModal').modal('hide'); // Ferme la modale même si bloqué
+                        }
+                    } else {
+                        showAlert('URL vidéo non disponible pour ce film.', 'danger');
+                        console.error('DEBUG Frontend: Le backend n\'a pas fourni d\'URL vidéo.');
+                        $('#filmDetailsModal').modal('hide'); 
                     }
                 } else {
                     showAlert(result.message || 'Erreur lors du lancement du film.', 'danger');
+                    console.error('DEBUG Frontend: Erreur de réponse du backend pour watch_film:', result.message);
+                    $('#filmDetailsModal').modal('hide'); 
                 }
             } catch (error) {
-                console.error('Erreur:', error);
+                console.error('DEBUG Frontend: Erreur réseau ou JavaScript lors du lancement du film:', error);
                 showAlert('Une erreur réseau est survenue lors du lancement du film. Veuillez réessayer.', 'danger');
-            } finally {
                 $('#filmDetailsModal').modal('hide'); 
             }
         });
@@ -783,6 +806,8 @@
                 image: this.dataset.image,
                 video_url: this.dataset.videoUrl 
             };
+            console.log('DEBUG Frontend: Bouton Ajouter à ma liste cliqué.');
+            console.log('DEBUG Frontend: Données du film à envoyer:', filmData);
 
             try {
                 const response = await fetch('{{ url_for('api_routes.add_to_list') }}', {
@@ -794,14 +819,16 @@
                 });
 
                 const result = await response.json();
+                console.log('DEBUG Frontend: Réponse du backend pour add_to_list:', result);
 
                 if (response.ok) {
                     showAlert(result.message, result.status);
                 } else {
                     showAlert(result.message || 'Erreur lors de l\'ajout à la liste.', 'danger');
+                    console.error('DEBUG Frontend: Erreur de réponse du backend pour add_to_list:', result.message);
                 }
             } catch (error) {
-                console.error('Erreur:', error);
+                console.error('DEBUG Frontend: Erreur réseau ou JavaScript lors de l\'ajout à la liste:', error);
                 showAlert('Une erreur réseau est survenue. Veuillez réessayer.', 'danger');
             } finally {
                 $('#filmDetailsModal').modal('hide'); 
