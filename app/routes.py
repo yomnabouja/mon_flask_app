@@ -143,6 +143,8 @@ def logout():
     flash('Déconnecté avec succès', 'info')
     return redirect(url_for('api_routes.login'))
 
+
+# --- Add to List Route ---
 @api_routes.route('/add_to_list', methods=['POST'])
 def add_to_list():
     if 'user_id' not in session:
@@ -151,11 +153,15 @@ def add_to_list():
     user_id = session['user_id']
     data = request.get_json()
 
+    # Retrieve all film data, including film_id and video_url
+    # film_id might be provided from the frontend if the film already exists in the DB
+    film_id_from_frontend = data.get('film_id')
     film_title = data.get('title')
     film_genre = data.get('genre')
     film_description = data.get('description')
     film_rating = data.get('rating')
     film_image = data.get('image')
+    film_video_url = data.get('video_url') # <--- Crucial: Get video URL
 
     if not film_title:
         return jsonify({'status': 'error', 'message': 'Titre du film manquant.'}), 400
@@ -164,47 +170,181 @@ def add_to_list():
     cursor = conn.cursor()
 
     try:
-        # Vérifie si le film existe déjà dans la table 'films'
-        cursor.execute('SELECT id FROM films WHERE title = ?', (film_title,))
-        film = cursor.fetchone()
         film_id = None
+        # Prioritize looking up by film_id if provided and valid
+        if film_id_from_frontend:
+            cursor.execute('SELECT id FROM films WHERE id = ?', (film_id_from_frontend,))
+            existing_film_by_id = cursor.fetchone()
+            if existing_film_by_id:
+                film_id = existing_film_by_id['id']
+                print(f"DEBUG (AddToList): Film found by ID '{film_id}'.")
+            else:
+                print(f"DEBUG (AddToList): Film ID '{film_id_from_frontend}' not found, attempting to find by title.")
 
-        if film:
-            film_id = film['id']
-            print(f"DEBUG (AddToList): Film '{film_title}' déjà existant avec ID: {film_id}")
-        else:
-            # Insère le film dans la table 'films'
-            cursor.execute(
-                'INSERT INTO films (title, genre, description, rating, image_url) VALUES (?, ?, ?, ?, ?)',
-                (film_title, film_genre, film_description, film_rating, film_image)
-            )
-            conn.commit()
-            film_id = cursor.lastrowid
-            print(f"DEBUG (AddToList): Film '{film_title}' inséré avec ID: {film_id}")
+        # If film_id was not found by its ID, try by title
+        if not film_id:
+            cursor.execute('SELECT id FROM films WHERE title = ?', (film_title,))
+            existing_film_by_title = cursor.fetchone()
+            if existing_film_by_title:
+                film_id = existing_film_by_title['id']
+                print(f"DEBUG (AddToList): Film '{film_title}' already exists with ID: {film_id}")
+            else:
+                # Insert the film into the 'films' table if it's truly new
+                print(f"DEBUG (AddToList): Film '{film_title}' is new, inserting into films table.")
+                cursor.execute(
+                    'INSERT INTO films (title, genre, description, rating, image_url, video_url) VALUES (?, ?, ?, ?, ?, ?)',
+                    (film_title, film_genre, film_description, film_rating, film_image, film_video_url)
+                )
+                conn.commit()
+                film_id = cursor.lastrowid
+                print(f"DEBUG (AddToList): Film '{film_title}' inserted with ID: {film_id}")
 
-        # Vérifie si le film est déjà dans la liste de l'utilisateur
+        # Check if the film is already in the user's list
         cursor.execute('SELECT id FROM user_films WHERE user_id = ? AND film_id = ?', (user_id, film_id))
         user_film_entry = cursor.fetchone()
 
         if user_film_entry:
-            print(f"DEBUG (AddToList): Film '{film_title}' déjà dans la liste de l'utilisateur {user_id}.")
+            print(f"DEBUG (AddToList): Film '{film_title}' already in user {user_id}'s list.")
             return jsonify({'status': 'info', 'message': 'Ce film est déjà dans votre liste !'}), 200
         else:
-            # Ajoute le film à la liste de l'utilisateur
+            # Add the film to the user's list, 'watched' defaults to 0 (false)
             cursor.execute(
-                'INSERT INTO user_films (user_id, film_id) VALUES (?, ?)',
+                'INSERT INTO user_films (user_id, film_id, watched) VALUES (?, ?, 0)',
                 (user_id, film_id)
             )
             conn.commit()
-            print(f"DEBUG (AddToList): Film '{film_title}' ajouté à la liste de l'utilisateur {user_id}.")
+            print(f"DEBUG (AddToList): Film '{film_title}' added to user {user_id}'s list.")
             return jsonify({'status': 'success', 'message': 'Film ajouté à votre liste avec succès !'}), 200
 
     except sqlite3.Error as e:
         print(f"DEBUG (AddToList Error): Erreur SQLite: {e}")
-        conn.rollback() # Annule la transaction en cas d'erreur
+        conn.rollback() # Rollback transaction on error
         return jsonify({'status': 'error', 'message': f'Erreur de base de données: {e}'}), 500
     except Exception as e:
         print(f"DEBUG (AddToList Error): Erreur inattendue: {e}")
+        return jsonify({'status': 'error', 'message': f'Une erreur inattendue est survenue: {e}'}), 500
+    finally:
+        if conn:
+            conn.close()
+
+# --- Watch Film Route ---
+@api_routes.route('/watch/<int:film_id>')
+def watch_film(film_id):
+    if 'user_id' not in session:
+        flash('Veuillez vous connecter pour regarder des films.', 'warning')
+        return redirect(url_for('api_routes.login'))
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    try:
+        cursor.execute('SELECT * FROM films WHERE id = ?', (film_id,))
+        film = cursor.fetchone()
+
+        if not film:
+            flash('Film introuvable.', 'danger')
+            return redirect(url_for('api_routes.dashboard'))
+
+        user_id = session['user_id']
+        # Mark the film as "watched" in the user's list if it's there
+        # This UPDATE only affects existing entries
+        cursor.execute(
+            'UPDATE user_films SET watched = 1 WHERE user_id = ? AND film_id = ?',
+            (user_id, film_id)
+        )
+        conn.commit()
+        print(f"DEBUG (WatchFilm): Film '{film['title']}' marked as watched for user {user_id}.")
+
+        return render_template('watch_film.html', film=film)
+
+    except sqlite3.Error as e:
+        print(f"DEBUG (WatchFilm Error): Erreur SQLite: {e}")
+        flash(f'Une erreur de base de données est survenue: {e}', 'danger')
+        return redirect(url_for('api_routes.dashboard'))
+    except Exception as e:
+        print(f"DEBUG (WatchFilm Error): Erreur inattendue: {e}")
+        flash(f'Une erreur inattendue est survenue lors de la lecture du film: {e}', 'danger')
+        return redirect(url_for('api_routes.dashboard'))
+    finally:
+        if conn:
+            conn.close()
+
+# --- My List Route ---
+@api_routes.route('/my_list')
+def my_list():
+    if 'user_id' not in session:
+        flash('Veuillez vous connecter pour voir votre liste.', 'warning')
+        return redirect(url_for('api_routes.login'))
+
+    user_id = session['user_id']
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    try:
+        # Fetch films from the user's list, along with their 'watched' status
+        cursor.execute(
+            '''
+            SELECT f.id, f.title, f.genre, f.description, f.rating, f.image_url, f.video_url, uf.watched
+            FROM user_films uf
+            JOIN films f ON uf.film_id = f.id
+            WHERE uf.user_id = ?
+            ORDER BY uf.added_at DESC
+            ''',
+            (user_id,)
+        )
+        my_films = cursor.fetchall()
+        print(f"DEBUG (MyList): {len(my_films)} films trouvés pour l'utilisateur {user_id}.")
+
+        return render_template('my_list.html', my_films=my_films)
+
+    except sqlite3.Error as e:
+        print(f"DEBUG (MyList Error): Erreur SQLite: {e}")
+        flash(f'Une erreur de base de données est survenue: {e}', 'danger')
+        return redirect(url_for('api_routes.dashboard'))
+    except Exception as e:
+        print(f"DEBUG (MyList Error): Erreur inattendue: {e}")
+        flash(f'Une erreur inattendue est survenue lors de la récupération de votre liste: {e}', 'danger')
+        return redirect(url_for('api_routes.dashboard'))
+    finally:
+        if conn:
+            conn.close()
+
+# --- Remove From List Route ---
+@api_routes.route('/remove_from_list', methods=['POST'])
+def remove_from_list():
+    if 'user_id' not in session:
+        return jsonify({'status': 'error', 'message': 'Non authentifié. Veuillez vous connecter.'}), 401
+
+    user_id = session['user_id']
+    data = request.get_json()
+    film_id = data.get('film_id')
+
+    if not film_id:
+        return jsonify({'status': 'error', 'message': 'ID du film manquant.'}), 400
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    try:
+        cursor.execute(
+            'DELETE FROM user_films WHERE user_id = ? AND film_id = ?',
+            (user_id, film_id)
+        )
+        conn.commit()
+
+        if cursor.rowcount > 0:
+            print(f"DEBUG (RemoveFromList): Film {film_id} retiré de la liste de l'utilisateur {user_id}.")
+            return jsonify({'status': 'success', 'message': 'Film retiré de votre liste.'}), 200
+        else:
+            print(f"DEBUG (RemoveFromList): Film {film_id} non trouvé dans la liste de l'utilisateur {user_id}.")
+            return jsonify({'status': 'info', 'message': 'Ce film n\'est pas dans votre liste.'}), 200
+
+    except sqlite3.Error as e:
+        print(f"DEBUG (RemoveFromList Error): Erreur SQLite: {e}")
+        conn.rollback()
+        return jsonify({'status': 'error', 'message': f'Erreur de base de données: {e}'}), 500
+    except Exception as e:
+        print(f"DEBUG (RemoveFromList Error): Erreur inattendue: {e}")
         return jsonify({'status': 'error', 'message': f'Une erreur inattendue est survenue: {e}'}), 500
     finally:
         if conn:

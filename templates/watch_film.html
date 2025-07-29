@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}Regarder {{ film.title }} - RecoFlix{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="mb-4">Regarder : {{ film.title }}</h1>
+    
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    {% if film.video_url and film.video_url != 'None' %}
+        <div class="ratio ratio-16x9 mb-4">
+            {# Intègre un lecteur vidéo. Si c'est une URL YouTube/Vimeo, utilisez un iframe. #}
+            {# Si c'est un fichier vidéo direct, utilisez la balise <video>. #}
+            {# Cet exemple utilise un iframe pour des URLs de plateformes #}
+            <iframe src="{{ film.video_url }}" title="{{ film.title }}" frameborder="0" allowfullscreen></iframe>
+            {# Si vous avez des fichiers vidéo locaux, utilisez ceci à la place de l'iframe: #}
+            {# <video controls style="width: 100%; height: auto;">
+                <source src="{{ film.video_url }}" type="video/mp4">
+                Votre navigateur ne supporte pas la balise vidéo.
+            </video> #}
+        </div>
+        
+        <h3>Description</h3>
+        <p>{{ film.description if film.description and film.description != 'None' else 'Pas de description disponible.' }}</p>
+        <p><strong>Genre:</strong> {{ film.genre if film.genre and film.genre != 'None' else 'N/A' }}</p>
+        <p><strong>Note:</strong> {{ film.rating if film.rating and film.rating != 'None' else 'N/A' }}/10</p>
+
+    {% else %}
+        <div class="alert alert-warning" role="alert">
+            Désolé, aucune URL vidéo n'est disponible pour ce film pour le moment.
+        </div>
+        <p>Veuillez vérifier ultérieurement ou contacter le support.</p>
+    {% endif %}
+
+    <a href="{{ url_for('api_routes.my_list') }}" class="btn btn-secondary mt-3">Retour à Ma Liste</a>
+    <a href="{{ url_for('api_routes.dashboard') }}" class="btn btn-info mt-3">Explorer d'autres films</a>
+
+</div>
+{% endblock %}
