@@ -180,7 +180,7 @@ def add_to_list():
             print(f"DEBUG (AddToList): Film '{film_title}' mis à jour.")
         else:
             cursor.execute(
-                'INSERT INTO films (title, genre, description, rating, image_url, video_url) VALUES (?, ?, ?, ?, ?, ?)',
+                'INSERT INTO films (title, genre, description, rating, image_url = ?, video_url) VALUES (?, ?, ?, ?, ?, ?)',
                 (film_title, film_genre, film_description, film_rating, film_image, film_video_url)
             )
             conn.commit()
