@@ -46,8 +46,8 @@ def init_db():
     # (title, genre, description, rating, image_url, video_url)
     films_a_ajouter = [
         ("Le Voyage de Chihiro", "Animation, Fantastique, Aventure", "Chihiro, une jeune fille de 10 ans, déménage avec ses parents. Sur la route, ils s'arrêtent devant un mystérieux tunnel qui les mène vers un monde peuplé de dieux et d'esprits. Un chef-d'œuvre de l'animation japonaise.", 9.0, "css/images/voyage1.jpg", "https://www.youtube.com/embed/ByXuk9Qqxkk"),
-        ("Film Populaire 1", "Action, Aventure", "Un film d'action palpitant avec des scènes spectaculaires et une histoire captivante.", 8.5, "css/images/film1.jpg", "https://www.youtube.com/embed/dQw4w9WgXcQ"),
-        ("Film Populaire 2", "Drame, Romance", "Une histoire d'amour émouvante et déchirante qui vous tiendra en haleine du début à la fin.", 7.9, "css/images/film2.jpg", "https://www.youtube.com/embed/dQw4w9WgXcQ"),
+        ("Film Populaire 1", "Action, Aventure", "Un film d'action palpitant avec des scènes spectaculaires et une histoire captivante.", 8.5, "css/images/film1.jpg", "https://www.youtube.com/watch?v=IgAj75hi_pM&list=RDW6tWmIb_IHA&index=4"),
+        ("Film Populaire 2", "Drame, Romance", "Une histoire d'amour émouvante et déchirante qui vous tiendra en haleine du début à la fin.", 7.9, "css/images/film2.jpg", "https://www.youtube.com/watch?v=hMfelJnZg_Y&list=RDW6tWmIb_IHA&index=3"),
         ("Film Populaire 3", "Science-fiction, Thriller", "Un thriller de science-fiction qui explore les limites de la technologie et de l'humanité.", 8.8, "css/images/film3.jpg", "https://www.youtube.com/embed/dQw4w9WgXcQ"),
         ("Film Populaire 4", "Comédie, Famille", "Une comédie légère et amusante parfaite pour toute la famille, pleine de rires et de moments tendres.", 7.2, "css/images/film4.jpg", "https://www.youtube.com/embed/dQw4w9WgXcQ"),
         ("Film Populaire 5", "Action, Thriller", "Un film d'action intense avec des rebondissements inattendus et une performance d'acteur exceptionnelle.", 8.1, "css/images/film5.jpg", "https://www.youtube.com/embed/dQw4w9WgXcQ"),
