@@ -12,3 +12,29 @@ body {
     font-size: 1.25rem;
     text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
 }
+ /* Styles pour le conteneur du chatbot */
+.chatbot-container {
+    transition: all 0.3s ease-in-out;
+    transform: translateY(100%);
+    bottom: 0;
+    right: 1rem;
+    z-index: 1000;
+}
+
+/* Classe pour afficher le chatbot */
+.chatbot-container.open {
+    transform: translateY(0);
+}
+
+/* Styles pour les messages du bot */
+.chat-message.bot {
+    border-bottom-left-radius: 0;
+    background-color: #e5e7eb;
+}
+
+/* Styles pour les messages de l'utilisateur */
+.chat-message.user {
+    border-bottom-right-radius: 0;
+    background-color: #3b82f6;
+    color: #fff;
+}
