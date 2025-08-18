@@ -25,7 +25,7 @@ jobs:
       # --- Étape de débogage : Lister le contenu du répertoire ---
       # Cette étape est cruciale pour comprendre la structure des fichiers vue par la pipeline.
       # Laissez-la active pour le prochain run pour vérifier les chemins.
-      - name:Debug: List repository contents
+      - name: Debug - List repository contents
         run: |
           echo "Current working directory: $(pwd)"
           echo "Listing contents of current directory:"
